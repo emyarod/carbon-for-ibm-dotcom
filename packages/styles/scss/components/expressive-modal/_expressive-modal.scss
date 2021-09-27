@@ -14,7 +14,7 @@
 /// @access private
 /// @group expressive-modal
 
-@mixin expressive-model {
+@mixin expressive-modal {
   $modal: '.#{$prefix}--modal';
   $button-size: carbon--rem(48px);
   $icon-size: carbon--rem(20px);
@@ -81,6 +81,6 @@
   }
 }
 
-@include exports('expressive-model') {
-  @include expressive-model;
+@include exports('expressive-modal') {
+  @include expressive-modal;
 }
