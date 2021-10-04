@@ -38,14 +38,14 @@
     }
 
     @include carbon--breakpoint('md') {
-      .#{$prefix}--model-container {
+      .#{$prefix}--modal-container {
         padding-top: $carbon--layout-05;
         padding-bottom: 0;
       }
     }
 
     @include carbon--breakpoint('lg') {
-      .#{$prefix}--model-container {
+      .#{$prefix}--modal-container {
         padding-top: $carbon--layout-04;
         padding-bottom: $carbon--spacing-05;
       }
