@@ -20,6 +20,7 @@ import { VIDEO_PLAYER_CONTENT_STATE, VIDEO_PLAYER_PLAYING_MODE } from './video-p
 // Above import is interface-only ref and thus code won't be brought into the build
 import './video-player';
 /* eslint-enable import/no-duplicates */
+import '../lightbox-media-viewer/lightbox-video-viewer';
 
 const { stablePrefix: ddsPrefix } = ddsSettings;
 
@@ -211,6 +212,20 @@ class DDSVideoPlayerComposite extends HybridRenderMixin(HostListenerMixin(LitEle
   }
 
   render() {
+    const { selectorVideoPlayer } = this.constructor as typeof DDSVideoPlayerComposite;
+    console.log(
+      'asdf',
+      'this',
+      this,
+      'this.constructor',
+      this.constructor,
+      'selectorVideoPlayer',
+      selectorVideoPlayer,
+      'this.querySelector(selectorVideoPlayer)',
+      this.querySelector(selectorVideoPlayer),
+      'this._videoPlayer',
+      this._videoPlayer
+    );
     return html`
       <slot></slot>
     `;

@@ -164,6 +164,7 @@ export const DDSVideoPlayerContainerMixin = <T extends Constructor<HTMLElement>>
       }
       videoPlayer.appendChild(div);
       const embedVideoHandle = await KalturaPlayerAPI.embedMedia(videoId, playerId);
+      console.log('ppppid', playerId, doc!.getElementById(playerId));
       doc!.getElementById(playerId)!.dataset.videoId = videoId;
       return embedVideoHandle.kWidget();
     }

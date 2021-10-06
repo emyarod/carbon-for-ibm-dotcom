@@ -39,6 +39,15 @@
       padding-right: $button-size - $offset-close-icon;
       margin-bottom: 0;
       padding-top: 0;
+      overflow: hidden;
+    }
+
+    ::slotted(#{$dds-prefix}-carousel) {
+      // padding: 0;
+
+      // .#{$prefix}--carousel__scroll-container {
+      //   height: calc(100vh - 12rem);
+      // }
     }
   }
 

@@ -99,3 +99,13 @@
     }
   }
 }
+
+:host-context(#{$dds-prefix}-expressive-modal) {
+  // ::slotted(:not([name])) {
+  //   flex-basis: 120%;
+  // }
+
+  .#{$prefix}--carousel__scroll-container {
+    height: calc(100vh - #{$spacing-13});
+  }
+}

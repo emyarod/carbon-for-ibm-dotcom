@@ -172,6 +172,22 @@ class DDSLightboxVideoPlayerComposite extends ModalRenderMixin(DDSVideoPlayerCom
   }
 
   renderModal() {
+    const { selectorVideoPlayer } = this.constructor as typeof DDSLightboxVideoPlayerComposite;
+    console.log(
+      'lightbox-video-player-composite',
+      'this',
+      this,
+      'this.constructor',
+      this.constructor,
+      'selectorVideoPlayer',
+      selectorVideoPlayer,
+      'this.modalRenderRoot',
+      this.modalRenderRoot,
+      '(this.modalRenderRoot as Element)?.querySelector?.(selectorVideoPlayer)',
+      (this.modalRenderRoot as Element)?.querySelector?.(selectorVideoPlayer),
+      'this._videoPlayer',
+      this._videoPlayer
+    );
     const {
       formatCaption,
       formatDuration,

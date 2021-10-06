@@ -9,12 +9,15 @@
 
 import { html } from 'lit-element';
 import { action } from '@storybook/addon-actions';
-import { boolean, select } from '@storybook/addon-knobs';
+import { boolean, select, text } from '@storybook/addon-knobs';
 import ifNonNull from 'carbon-web-components/es/globals/directives/if-non-null.js';
 import 'carbon-web-components/es/components/modal/modal-close-button.js';
 import textNullable from '../../../../.storybook/knob-text-nullable';
 import '../lightbox-image-viewer';
 import '../lightbox-video-player-container';
+import '../lightbox-video-viewer-container';
+import '../../carousel/index';
+import '../../video-player/index';
 import styles from './lightbox-media-viewer.stories.scss';
 import readme from './README.stories.mdx';
 
@@ -73,6 +76,16 @@ Default.story = {
           `
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
             Phasellus at elit sollicitudin, sodales nulla quis, consequat libero.
           `,
           groupId
@@ -123,27 +136,6 @@ EmbeddedVideoPlayer.story = {
   },
 };
 
-Default.story = {
-  parameters: {
-    knobs: {
-      LightboxImageViewer: ({ groupId }) => ({
-        alt: textNullable('Image alt text (alt)', 'Image alt text', groupId),
-        defaultSrc: select('Image (default-src)', images, images['1312 x 656 (2:1)'], groupId),
-        description: textNullable(
-          'Description (description)',
-          `
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Aenean et ultricies est.Mauris iaculis eget dolor nec hendrerit.
-            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero.
-          `,
-          groupId
-        ),
-        title: textNullable('Title (title)', 'Curabitur malesuada varius mi eu posuere', groupId),
-      }),
-    },
-  },
-};
-
 export default {
   title: 'Components/Lightbox media viewer',
   parameters: {
@@ -162,6 +154,206 @@ export default {
         onBeforeClose: action('dds-expressive-modal-beingclosed'),
         onClose: action('dds-expressive-modal-closed'),
       }),
+    },
+  },
+};
+
+export const WithCarousel = ({ parameters }) => {
+  const { open, disableClose, onBeforeClose, onClose } = parameters?.props?.Modal ?? {};
+  const { alt, description, title } = parameters?.props?.LightboxImageViewer ?? {};
+  // const { caption, thumbnail } = parameters?.props?.VideoPlayer ?? {};
+  const { hideCaption, videoId, customVideoName, customVideoDescription } = parameters?.props?.LightboxVideoViewerContainer ?? {};
+  const handleBeforeClose = (event: CustomEvent) => {
+    onBeforeClose?.(event);
+    if (disableClose) {
+      event.preventDefault();
+    }
+  };
+  const carouselVideo = html`
+    <dds-lightbox-video-viewer-container
+      ?hide-caption="${hideCaption}"
+      video-id="${videoId}"
+      custom-video-name="${ifNonNull(customVideoName)}"
+      custom-video-description="${ifNonNull(customVideoDescription)}"
+    >
+    </dds-lightbox-video-viewer-container>
+  `;
+  const carouselItems = Object.values(images)
+    .reverse()
+    .map(
+      (image, index) =>
+        html`
+          <dds-lightbox-image-viewer
+            alt="${ifNonNull(alt)}"
+            default-src="${image}"
+            description="${ifNonNull(index % 2 ? description : `${description} `.repeat(3))}"
+            title="${ifNonNull(title)}"
+          ></dds-lightbox-image-viewer>
+        `
+    );
+  return html`
+    <style>
+      ${styles}
+    </style>
+    <dds-expressive-modal
+      expressive-size="full-width"
+      mode="lightbox"
+      ?open="${open}"
+      @dds-expressive-modal-beingclosed="${handleBeforeClose}"
+      @dds-expressive-modal-closed="${onClose}"
+    >
+      <dds-expressive-modal-close-button></dds-expressive-modal-close-button>
+      <dds-carousel page-size="1">
+        <dds-lightbox-image-viewer
+          alt="${ifNonNull(alt)}"
+          default-src="${images['1312 x 656 (2:1)']}"
+          description="${ifNonNull(description)}"
+          title="${ifNonNull(title)}"
+        >
+        </dds-lightbox-image-viewer>
+        ${carouselVideo} ${carouselItems}
+      </dds-carousel>
+    </dds-expressive-modal>
+  `;
+};
+
+WithCarousel.story = {
+  name: 'With carousel',
+  parameters: {
+    knobs: {
+      LightboxImageViewer: ({ groupId }) => ({
+        alt: textNullable('Image alt text (alt)', 'Image alt text', groupId),
+        description: textNullable(
+          'Description (description)',
+          `
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est. Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero.
+          `,
+          groupId
+        ),
+        title: textNullable('Title (title)', 'Curabitur malesuada varius mi eu posuere', groupId),
+      }),
+      LightboxVideoViewerContainer: ({ groupId }) => ({
+        hideCaption: boolean('hide caption (hide-caption)', false, groupId),
+        videoId: textNullable('Video ID (video-id)', '1_9h94wo6b', groupId),
+        customVideoName: textNullable('Video custom name', 'Custom video name', groupId),
+        customVideoDescription: textNullable('Video custom description', 'This is a custom video description', groupId),
+      }),
+      VideoPlayer: ({ groupId }) => {
+        return {
+          aspectRatio: '16x9',
+          customVideoDescription: text('Custom video description', 'This is a custom video description.', groupId),
+          caption: text('Custom caption (caption):', '', groupId),
+          hideCaption: boolean('Hide caption (hideCaption):', false, groupId),
+          thumbnail: text('Custom thumbnail (thumbnail):', '', groupId),
+          videoId: '1_9h94wo6b',
+        };
+      },
+    },
+  },
+};
+
+export const CarouselOnly = ({ parameters }) => {
+  const { open, disableClose, onBeforeClose, onClose } = parameters?.props?.Modal ?? {};
+  const { alt, description, title } = parameters?.props?.LightboxImageViewer ?? {};
+  // const { caption, thumbnail } = parameters?.props?.VideoPlayer ?? {};
+  const { hideCaption, videoId, customVideoName, customVideoDescription } = parameters?.props?.LightboxVideoViewerContainer ?? {};
+  const handleBeforeClose = (event: CustomEvent) => {
+    onBeforeClose?.(event);
+    if (disableClose) {
+      event.preventDefault();
+    }
+  };
+  const carouselVideo = html`
+    <dds-lightbox-video-viewer-container
+      ?hide-caption="${hideCaption}"
+      video-id="${videoId}"
+      custom-video-name="${ifNonNull(customVideoName)}"
+      custom-video-description="${ifNonNull(customVideoDescription)}"
+    >
+    </dds-lightbox-video-viewer-container>
+  `;
+  const carouselItems = Object.values(images)
+    .reverse()
+    .map(
+      (image, index) =>
+        html`
+          <dds-lightbox-image-viewer
+            alt="${ifNonNull(alt)}"
+            default-src="${image}"
+            description="${ifNonNull(index % 2 ? description : `${description} `.repeat(3))}"
+            title="${ifNonNull(title)}"
+          ></dds-lightbox-image-viewer>
+        `
+    );
+  return html`
+    <style>
+      ${styles}
+    </style>
+
+    <dds-carousel page-size="1">
+      <dds-lightbox-image-viewer
+        alt="${ifNonNull(alt)}"
+        default-src="${images['1312 x 656 (2:1)']}"
+        description="${ifNonNull(description)}"
+        title="${ifNonNull(title)}"
+      >
+      </dds-lightbox-image-viewer>
+      ${carouselItems}${carouselVideo}
+    </dds-carousel>
+  `;
+};
+
+CarouselOnly.story = {
+  name: 'Carousel only',
+  parameters: {
+    knobs: {
+      LightboxImageViewer: ({ groupId }) => ({
+        alt: textNullable('Image alt text (alt)', 'Image alt text', groupId),
+        description: textNullable(
+          'Description (description)',
+          `
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est.Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est.Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est.Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est.Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean et ultricies est.Mauris iaculis eget dolor nec hendrerit.
+            Phasellus at elit sollicitudin, sodales nulla quis, consequat libero.
+          `,
+          groupId
+        ),
+        title: textNullable('Title (title)', 'Curabitur malesuada varius mi eu posuere', groupId),
+      }),
+      LightboxVideoViewerContainer: ({ groupId }) => ({
+        hideCaption: boolean('hide caption (hide-caption)', false, groupId),
+        videoId: textNullable('Video ID (video-id)', '1_9h94wo6b', groupId),
+        customVideoName: textNullable('Video custom name', 'Custom video name', groupId),
+        customVideoDescription: textNullable('Video custom description', 'This is a custom video description', groupId),
+      }),
+      VideoPlayer: ({ groupId }) => {
+        return {
+          aspectRatio: '16x9',
+          customVideoDescription: text('Custom video description', 'This is a custom video description.', groupId),
+          caption: text('Custom caption (caption):', '', groupId),
+          hideCaption: boolean('Hide caption (hideCaption):', false, groupId),
+          thumbnail: text('Custom thumbnail (thumbnail):', '', groupId),
+          videoId: '1_9h94wo6b',
+        };
+      },
     },
   },
 };

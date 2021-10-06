@@ -84,6 +84,36 @@ CardsWithImages.story = {
   },
 };
 
+export const Test = ({ parameters }) => {
+  const { cardSize } = parameters?.props?.Carousel ?? {};
+  const classes = classMap({
+    [cardSize]: cardSize,
+  });
+  return html`
+    <dds-carousel class="${classes}" page-size="1">
+      <dds-lightbox-image-viewer default-src="${imgLg2x1}" description="description" title="title title">
+      </dds-lightbox-image-viewer>
+      <dds-lightbox-image-viewer default-src="${imgLg2x1}" description="description" title="title title">
+      </dds-lightbox-image-viewer>
+      <dds-lightbox-image-viewer default-src="${imgLg2x1}" description="description" title="title title">
+      </dds-lightbox-image-viewer>
+      <dds-lightbox-image-viewer default-src="${imgLg2x1}" description="description" title="title title">
+      </dds-lightbox-image-viewer>
+      <dds-lightbox-image-viewer default-src="${imgLg2x1}" description="description" title="title title">
+      </dds-lightbox-image-viewer>
+      <dds-lightbox-image-viewer default-src="${imgLg2x1}" description="description" title="title title">
+      </dds-lightbox-image-viewer>
+    </dds-carousel>
+  `;
+};
+
+Test.story = {
+  name: 'Test',
+  parameters: {
+    gridCarouselClass: 'dds-ce-demo-devenv--simple-grid--carousel--full-16',
+  },
+};
+
 export default {
   title: 'Components/Carousel',
   decorators: [

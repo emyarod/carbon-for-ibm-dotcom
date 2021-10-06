@@ -82,6 +82,7 @@
 
       @include carbon--breakpoint('lg') {
         flex-direction: row;
+        // height: calc(100vh - #{$spacing-13});
       }
     }
 
@@ -189,6 +190,33 @@
         height: 100%;
       }
     }
+  }
+
+  :host-context(#{$dds-prefix}-expressive-modal) {
+    .#{$prefix}--lightbox-media-viewer__container {
+      height: calc(100vh - #{$spacing-13});
+    }
+
+    .#{$prefix}--lightbox-media-viewer__media {
+      display: flex;
+      justify-content: center;
+      // max-width: calc(75% - 5rem);
+
+      @include carbon--breakpoint('lg') {
+        // width: calc(75% - 5rem);
+        // max-height: calc(100vh - 12rem);
+        height: auto;
+      }
+    }
+
+    .#{$prefix}--lightbox-media-viewer__media-description::after {
+      bottom: 6rem;
+    }
+
+    // .#{$prefix}--video-player .#{$prefix}--video-player__video-container {
+    //   padding-top: initial;
+    //   height: initial;
+    // }
   }
 }
 
