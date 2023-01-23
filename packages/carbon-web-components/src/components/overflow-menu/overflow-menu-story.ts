@@ -34,8 +34,7 @@ const directions = {
 const sizes = {
   'Regular size': null,
   [`Small size (${OVERFLOW_MENU_SIZE.SMALL})`]: OVERFLOW_MENU_SIZE.SMALL,
-  [`XL size (${OVERFLOW_MENU_SIZE.EXTRA_LARGE})`]:
-    OVERFLOW_MENU_SIZE.EXTRA_LARGE,
+  [`Lg size (${OVERFLOW_MENU_SIZE.LARGE})`]: OVERFLOW_MENU_SIZE.LARGE,
 };
 
 export const Default = (args) => {

@@ -25,7 +25,7 @@ const colorSchemes = {
 const sizes = {
   'Regular size': null,
   [`Small size (${INPUT_SIZE.SMALL})`]: INPUT_SIZE.SMALL,
-  [`Extra large size (${INPUT_SIZE.EXTRA_LARGE})`]: INPUT_SIZE.EXTRA_LARGE,
+  [`Large size (${INPUT_SIZE.LARGE})`]: INPUT_SIZE.LARGE,
 };
 
 export const Default = (args) => {

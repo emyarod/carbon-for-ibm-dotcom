@@ -27,8 +27,13 @@ const sizes = {
   'Regular size': null,
   [`Small size (${FILE_UPLOADER_ITEM_SIZE.SMALL})`]:
     FILE_UPLOADER_ITEM_SIZE.SMALL,
-  [`Size for form field (${FILE_UPLOADER_ITEM_SIZE.FIELD})`]:
-    FILE_UPLOADER_ITEM_SIZE.FIELD,
+  [`Large size (${FILE_UPLOADER_ITEM_SIZE.LARGE})`]:
+    FILE_UPLOADER_ITEM_SIZE.LARGE,
+  // TODO: deprecate
+  // [`Small size (${FILE_UPLOADER_ITEM_SIZE.SMALL})`]:
+  //   FILE_UPLOADER_ITEM_SIZE.SMALL,
+  // [`Size for form field (${FILE_UPLOADER_ITEM_SIZE.FIELD})`]:
+  //   FILE_UPLOADER_ITEM_SIZE.FIELD,
 };
 
 /**
