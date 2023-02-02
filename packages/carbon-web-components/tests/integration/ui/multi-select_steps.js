@@ -7,7 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-describe('bx-multi-select', () => {
+const { prefix } = require('../../../src/globals/settings');
+
+describe(`${prefix}-multi-select`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-multi-select--default`
@@ -15,13 +17,19 @@ describe('bx-multi-select', () => {
   });
 
   it('should have multi select interactive', async () => {
-    await page.click('bx-multi-select .bx--list-box__field');
-    await expect(page).toHaveSelector('bx-multi-select .bx--list-box__menu', {
-      state: 'visible',
-    });
-    await page.click('bx-multi-select .bx--list-box__field');
-    await expect(page).toHaveSelector('bx-multi-select .bx--list-box__menu', {
-      state: 'hidden',
-    });
+    await page.click(`${prefix}-multi-select .${prefix}--list-box__field`);
+    await expect(page).toHaveSelector(
+      `${prefix}-multi-select .${prefix}--list-box__menu`,
+      {
+        state: 'visible',
+      }
+    );
+    await page.click(`${prefix}-multi-select .${prefix}--list-box__field`);
+    await expect(page).toHaveSelector(
+      `${prefix}-multi-select .${prefix}--list-box__menu`,
+      {
+        state: 'hidden',
+      }
+    );
   });
 });

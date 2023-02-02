@@ -9,10 +9,8 @@
 
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import settings from 'carbon-components/es/globals/js/settings';
+import { prefix } from '../../globals/settings';
 import styles from './structured-list.scss';
-
-const { prefix } = settings;
 
 /**
  * Skeleton of structured list header cell.
@@ -20,7 +18,7 @@ const { prefix } = settings;
 @customElement(`${prefix}-structured-list-header-cell-skeleton`)
 class BXStructuredListHeaderCellSkeleton extends LitElement {
   render() {
-    return html` <span></span> `;
+    return html`<span></span>`;
   }
 
   static styles = styles;

@@ -7,20 +7,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { prefix } from '../../src/globals/settings';
 import { LOADING_TYPE } from '../../src/components/loading/loading';
 
-describe('bx-loading', function () {
+describe(`${prefix}-loading`, function () {
   describe('Changing spinner type', function () {
     let elem: HTMLElement | null;
 
     beforeEach(function () {
-      elem = document.body.appendChild(document.createElement('bx-loading'));
+      elem = document.body.appendChild(
+        document.createElement(`${prefix}-loading`)
+      );
     });
 
     it('should choose the right template for default type', function () {
       expect(
         elem!.shadowRoot!.querySelectorAll(
-          '.bx--loading--small,.bx--loading-overlay'
+          `.cds--loading--small,.${prefix}--loading-overlay`
         ).length
       ).toBe(0);
     });
@@ -30,7 +33,7 @@ describe('bx-loading', function () {
       await Promise.resolve();
       expect(
         elem!.shadowRoot!.querySelectorAll(
-          '.bx--loading--small,.bx--loading-overlay'
+          `.cds--loading--small,.${prefix}--loading-overlay`
         ).length
       ).toBe(0);
     });
@@ -38,13 +41,17 @@ describe('bx-loading', function () {
     it('should choose the right template for small type', async function () {
       elem!.setAttribute('type', LOADING_TYPE.SMALL);
       await Promise.resolve();
-      expect(elem!.shadowRoot!.querySelectorAll('.bx--loading').length).toBe(0);
+      expect(
+        elem!.shadowRoot!.querySelectorAll(`.${prefix}--loading`).length
+      ).toBe(0);
     });
 
     it('should choose the right template for overlay type', async function () {
       elem!.setAttribute('type', LOADING_TYPE.OVERLAY);
       await Promise.resolve();
-      expect(elem!.shadowRoot!.querySelectorAll('.bx--loading').length).toBe(1);
+      expect(
+        elem!.shadowRoot!.querySelectorAll(`.${prefix}--loading`).length
+      ).toBe(1);
     });
 
     afterEach(function () {
@@ -59,7 +66,9 @@ describe('bx-loading', function () {
     let elem: HTMLElement | null;
 
     beforeAll(function () {
-      elem = document.body.appendChild(document.createElement('bx-loading'));
+      elem = document.body.appendChild(
+        document.createElement(`${prefix}-loading`)
+      );
       elem.setAttribute('type', LOADING_TYPE.OVERLAY);
     });
 
@@ -67,7 +76,7 @@ describe('bx-loading', function () {
       elem!.setAttribute('inactive', '');
       await Promise.resolve();
       expect(
-        elem!.shadowRoot!.querySelectorAll('.bx--loading--stop').length
+        elem!.shadowRoot!.querySelectorAll(`.${prefix}--loading--stop`).length
       ).toBe(1);
     });
 
@@ -75,7 +84,7 @@ describe('bx-loading', function () {
       elem!.removeAttribute('inactive');
       await Promise.resolve();
       expect(
-        elem!.shadowRoot!.querySelectorAll('.bx--loading--stop').length
+        elem!.shadowRoot!.querySelectorAll(`.${prefix}--loading--stop`).length
       ).toBe(0);
     });
 

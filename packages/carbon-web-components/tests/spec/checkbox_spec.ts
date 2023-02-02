@@ -8,6 +8,7 @@
  */
 
 import { html, render } from 'lit';
+import { prefix } from '../../src/globals/settings';
 import { Default } from '../../src/components/checkbox/checkbox-story';
 
 /**
@@ -25,10 +26,10 @@ const getValues = (formData: FormData) => {
 
 const template = (props?) =>
   Default({
-    'bx-checkbox': props,
+    [`${prefix}-checkbox`]: props,
   });
 
-describe('bx-checkbox', function () {
+describe(`${prefix}-checkbox`, function () {
   describe('Rendering', function () {
     it('Should render with minimum attributes', async function () {
       render(
@@ -38,11 +39,11 @@ describe('bx-checkbox', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-checkbox' as any)).toMatchSnapshot(
-        {
-          mode: 'shadow',
-        }
-      );
+      expect(
+        document.body.querySelector(`${prefix}-checkbox` as any)
+      ).toMatchSnapshot({
+        mode: 'shadow',
+      });
     });
 
     it('Should render with various attributes', async function () {
@@ -60,11 +61,11 @@ describe('bx-checkbox', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-checkbox' as any)).toMatchSnapshot(
-        {
-          mode: 'shadow',
-        }
-      );
+      expect(
+        document.body.querySelector(`${prefix}-checkbox` as any)
+      ).toMatchSnapshot({
+        mode: 'shadow',
+      });
     });
   });
 

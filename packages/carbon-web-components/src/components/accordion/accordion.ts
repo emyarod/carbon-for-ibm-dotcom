@@ -7,21 +7,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement, html } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
-import settings from 'carbon-components/es/globals/js/settings';
+import { html, property, customElement, LitElement } from 'lit-element';
+import { prefix } from '../../globals/settings';
 import { forEach } from '../../globals/internal/collection-helpers';
 import { ACCORDION_SIZE } from './defs';
 import styles from './accordion.scss';
 
 export { ACCORDION_SIZE };
 
-const { prefix } = settings;
-
 /**
  * Accordion container.
  *
- * @element bx-accordion
+ * @element cds-accordion
  */
 @customElement(`${prefix}-accordion`)
 class BXAccordion extends LitElement {
@@ -53,7 +50,7 @@ class BXAccordion extends LitElement {
   }
 
   render() {
-    return html` <slot></slot> `;
+    return html`<slot></slot>`;
   }
 
   static get selectorAccordionItems() {

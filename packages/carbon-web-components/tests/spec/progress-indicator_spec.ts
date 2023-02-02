@@ -8,21 +8,22 @@
  */
 
 import { render } from 'lit';
+import { prefix } from '../../src/globals/settings';
 import { PROGRESS_STEP_STAT } from '../../src/components/progress-indicator/progress-step';
 import { Default } from '../../src/components/progress-indicator/progress-indicator-story';
 
 const template = (props?) =>
   Default({
-    'bx-progress-step': props,
+    [`${prefix}-progress-step`]: props,
   });
 
-describe('bx-progress-step', function () {
+describe(`${prefix}-progress-step`, function () {
   describe('Rendering', function () {
     it('Should render with minimum attributes', async function () {
       render(template(), document.body);
       await Promise.resolve();
       expect(
-        document.body.querySelector('bx-progress-step' as any)
+        document.body.querySelector(`${prefix}-progress-step` as any)
       ).toMatchSnapshot({
         mode: 'shadow',
       });
@@ -41,7 +42,9 @@ describe('bx-progress-step', function () {
       );
       await Promise.resolve();
       expect(
-        document.body.querySelector('bx-progress-step[state="complete"]' as any)
+        document.body.querySelector(
+          `${prefix}-progress-step[state="complete"]` as any
+        )
       ).toMatchSnapshot({ mode: 'shadow' });
     });
 

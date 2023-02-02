@@ -7,7 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-describe('bx-modal', () => {
+const { prefix } = require('../../../src/globals/settings');
+
+describe(`${prefix}-modal`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-modal--default`
@@ -15,9 +17,12 @@ describe('bx-modal', () => {
   });
 
   it('should have modal closable', async () => {
-    await page.click('bx-modal-close-button button');
-    await expect(page).toHaveSelector('bx-modal .bx--modal-container', {
-      state: 'hidden',
-    });
+    await page.click(`${prefix}-modal-close-button button`);
+    await expect(page).toHaveSelector(
+      `${prefix}-modal .${prefix}--modal-container`,
+      {
+        state: 'hidden',
+      }
+    );
   });
 });

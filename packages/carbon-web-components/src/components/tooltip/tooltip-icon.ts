@@ -10,15 +10,13 @@
 import { classMap } from 'lit/directives/class-map.js';
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import settings from 'carbon-components/es/globals/js/settings';
+import { prefix } from '../../globals/settings';
 import BXTooltipDefintion from './tooltip-definition';
-
-const { prefix } = settings;
 
 /**
  * Icon tooltip.
  *
- * @element bx-tooltip-icon
+ * @element cds-tooltip-icon
  * @slot body - The tooltip body content.
  */
 @customElement(`${prefix}-tooltip-icon`)

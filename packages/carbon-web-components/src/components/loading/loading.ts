@@ -7,20 +7,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import settings from 'carbon-components/es/globals/js/settings';
 import { classMap } from 'lit/directives/class-map.js';
 import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import { prefix } from '../../globals/settings';
 import { LOADING_TYPE } from './defs';
 import getLoadingIcon from './loading-icon';
 import styles from './loading.scss';
 
-const { prefix } = settings;
-
 /**
  * Spinner indicating loading state.
  *
- * @element bx-loading
+ * @element cds-loading
  */
 @customElement(`${prefix}-loading`)
 class BXLoading extends LitElement {

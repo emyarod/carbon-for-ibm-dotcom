@@ -19,6 +19,7 @@ import {
   FILE_UPLOADER_ITEM_SIZE,
   FILE_UPLOADER_ITEM_STATE,
 } from './file-uploader-item';
+import { prefix } from '../../globals/settings';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import { FileData } from './stories/types';
 import storyDocs from './file-uploader-story.mdx';
@@ -50,7 +51,7 @@ class BXCEDemoFileUploader extends LitElement {
   private _files: FileData[] = [];
 
   /**
-   * Handles `bx-drop-container-changed` on `<bx-file-drop-container>`.
+   * Handles `cds-drop-container-changed` on `<cds-file-drop-container>`.
    *
    * @param event The event.
    */
@@ -77,7 +78,7 @@ class BXCEDemoFileUploader extends LitElement {
   }
 
   /**
-   * Handles `bx-file-uploader-item-deleted` on `<bx-file-uploader-item>`.
+   * Handles `cds-file-uploader-item-deleted` on `<cds-file-uploader-item>`.
    *
    * @param event The event.
    */
@@ -185,16 +186,16 @@ class BXCEDemoFileUploader extends LitElement {
       _handleDelete: handleDelete,
     } = this;
     return html`
-      <bx-file-uploader
+      <cds-file-uploader
         helper-text="${ifDefined(helperText)}"
         label-text="${ifDefined(labelText)}">
-        <bx-file-drop-container
+        <cds-file-drop-container
           accept="${ifDefined(accept)}"
           ?disabled="${disabled}"
           ?multiple="${multiple}"
-          @bx-file-drop-container-changed="${handleChange}">
+          @cds-file-drop-container-changed="${handleChange}">
           Drag and drop files here or click to upload
-        </bx-file-drop-container>
+        </cds-file-drop-container>
         ${files.map(
           ({
             id,
@@ -204,21 +205,21 @@ class BXCEDemoFileUploader extends LitElement {
             supplementalValidityMessage,
             validityMessage,
           }) => html`
-            <bx-file-uploader-item
+            <cds-file-uploader-item
               data-file-id="${id}"
               ?invalid="${invalid}"
               size="${ifDefined(size)}"
               state="${ifDefined(state)}"
               validity-message="${ifDefined(validityMessage)}"
-              @bx-file-uploader-item-deleted="${handleDelete}">
+              @cds-file-uploader-item-deleted="${handleDelete}">
               ${file.name}
               <span slot="validity-message-supplement"
                 >${supplementalValidityMessage}</span
               >
-            </bx-file-uploader-item>
+            </cds-file-uploader-item>
           `
         )}
-      </bx-file-uploader>
+      </cds-file-uploader>
     `;
   }
 }
@@ -229,17 +230,18 @@ const defineDemoFileUploader = (() => {
     if (!hasDemoFileUploaderDefined) {
       hasDemoFileUploaderDefined = true;
       const ce = customElements;
-      // Prevents `web-component-analyzer` from harvesting `<bx-ce-demo-data-table>`
-      ce.define('bx-ce-demo-file-uploader', BXCEDemoFileUploader);
+      // Prevents `web-component-analyzer` from harvesting `<cds-ce-demo-data-table>`
+      ce.define(`${prefix}-ce-demo-file-uploader`, BXCEDemoFileUploader);
     }
   };
 })();
 
 export const Default = (args) => {
-  const { helperText, labelText } = args?.['bx-file-uploader'] ?? {};
-  const { accept, disabled, multiple } = args?.['bx-file-drop-container'] ?? {};
+  const { helperText, labelText } = args?.[`${prefix}-file-uploader`] ?? {};
+  const { accept, disabled, multiple } =
+    args?.[`${prefix}-file-drop-container`] ?? {};
   const { size, disableDelete, onBeforeDelete, onDelete } =
-    args?.['bx-file-uploader-item'] ?? {};
+    args?.[`${prefix}-file-uploader-item`] ?? {};
   const handleBeforeDelete = (event: CustomEvent) => {
     onBeforeDelete(event);
     if (disableDelete) {
@@ -248,16 +250,16 @@ export const Default = (args) => {
   };
   defineDemoFileUploader();
   return html`
-    <bx-ce-demo-file-uploader
+    <cds-ce-demo-file-uploader
       accept="${ifDefined(accept)}"
       ?disabled="${disabled}"
       helper-text="${ifDefined(helperText)}"
       label-text="${ifDefined(labelText)}"
       ?multiple="${multiple}"
       size="${ifDefined(size)}"
-      @bx-file-uploader-item-beingdeleted="${handleBeforeDelete}"
-      @bx-file-uploader-item-deleted="${onDelete}">
-    </bx-ce-demo-file-uploader>
+      @cds-file-uploader-item-beingdeleted="${handleBeforeDelete}"
+      @cds-file-uploader-item-deleted="${onDelete}">
+    </cds-ce-demo-file-uploader>
   `;
 };
 
@@ -268,14 +270,14 @@ export default {
   parameters: {
     ...storyDocs.parameters,
     knobs: {
-      'bx-file-uploader': () => ({
+      [`${prefix}-file-uploader`]: () => ({
         helperText: textNullable(
           'Helper text (helper-text)',
           'Only .jpg and .png files. 500kb max file size'
         ),
         labelText: textNullable('Label text (label-text)', 'Account photo'),
       }),
-      'bx-file-drop-container': () => ({
+      [`${prefix}-file-drop-container`]: () => ({
         accept: textNullable(
           'Accepted MIME types or file extensions (accept)',
           'image/jpeg image/png'
@@ -286,14 +288,14 @@ export default {
           true
         ),
       }),
-      'bx-file-uploader-item': () => ({
+      [`${prefix}-file-uploader-item`]: () => ({
         size: select('Filename height (size)', sizes, null),
         disableDelete: boolean(
-          'Disable user-initiated delete action (Call event.preventDefault() in bx-file-uploader-item-beingdeleted event)',
+          `Disable user-initiated delete action (Call event.preventDefault() in ${prefix}-file-uploader-item-beingdeleted event)`,
           false
         ),
-        onBeforeDelete: action('bx-file-uploader-item-beingdeleted'),
-        onDelete: action('bx-file-uploader-item-deleted'),
+        onBeforeDelete: action(`${prefix}-file-uploader-item-beingdeleted`),
+        onDelete: action(`${prefix}-file-uploader-item-deleted`),
       }),
     },
   },

@@ -7,7 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-describe('bx-accordion', () => {
+const { prefix } = require('../../../src/globals/settings');
+
+describe(`${prefix}-accordion`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-accordion--default`
@@ -15,16 +17,16 @@ describe('bx-accordion', () => {
   });
 
   it('should have accordion interactive', async () => {
-    await page.click('bx-accordion-item:nth-of-type(1) button');
+    await page.click(`${prefix}-accordion-item:nth-of-type(1) button`);
     await expect(page).toHaveSelector(
-      'bx-accordion-item:nth-of-type(1) #content',
+      `${prefix}-accordion-item:nth-of-type(1) #content`,
       {
         state: 'visible',
       }
     );
-    await page.click('bx-accordion-item:nth-of-type(1) button');
+    await page.click(`${prefix}-accordion-item:nth-of-type(1) button`);
     await expect(page).toHaveSelector(
-      'bx-accordion-item:nth-of-type(1) #content',
+      `${prefix}-accordion-item:nth-of-type(1) #content`,
       {
         state: 'hidden',
       }

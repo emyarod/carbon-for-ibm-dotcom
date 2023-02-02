@@ -10,17 +10,17 @@
 import { delay } from 'bluebird';
 import { render } from 'lit';
 import EventManager from '../utils/event-manager';
-
+import { prefix } from '../../src/globals/settings';
 import BXMultiSelect from '../../src/components/multi-select/multi-select';
 import BXMultiSelectItem from '../../src/components/multi-select/multi-select-item';
 import { Default } from '../../src/components/multi-select/multi-select-story';
 
 const template = (props?) =>
   Default({
-    'bx-multi-select': props,
+    [`${prefix}-multi-select`]: props,
   });
 
-describe('bx-multi-select', function () {
+describe(`${prefix}-multi-select`, function () {
   const events = new EventManager();
 
   describe('Misc attributes', function () {
@@ -28,7 +28,7 @@ describe('bx-multi-select', function () {
       render(template(), document.body);
       await Promise.resolve();
       expect(
-        document.body.querySelector('bx-multi-select' as any)
+        document.body.querySelector(`${prefix}-multi-select` as any)
       ).toMatchSnapshot({
         mode: 'shadow',
       });
@@ -55,7 +55,7 @@ describe('bx-multi-select', function () {
       );
       await Promise.resolve();
       expect(
-        document.body.querySelector('bx-multi-select' as any)
+        document.body.querySelector(`${prefix}-multi-select` as any)
       ).toMatchSnapshot({
         mode: 'shadow',
       });
@@ -69,15 +69,17 @@ describe('bx-multi-select', function () {
     beforeEach(async function () {
       render(template(), document.body);
       await Promise.resolve();
-      elem = document.body.querySelector('bx-multi-select')!;
-      itemNode = elem.querySelector('bx-multi-select-item')!;
+      elem = document.body.querySelector(`${prefix}-multi-select`)!;
+      itemNode = elem.querySelector(`${prefix}-multi-select-item`)!;
     });
 
     it('should add "open" stateful modifier class', async function () {
       const inner = elem.shadowRoot!.querySelector('div[role="listbox"]');
       (inner as HTMLElement).click();
       await Promise.resolve();
-      expect(inner!.classList.contains('bx--list-box--expanded')).toBe(true);
+      expect(inner!.classList.contains(`${prefix}--list-box--expanded`)).toBe(
+        true
+      );
     });
 
     it('should remove "open" stateful modifier class (closed default state)', async function () {
@@ -86,7 +88,9 @@ describe('bx-multi-select', function () {
       const inner = elem.shadowRoot!.querySelector('div[role="listbox"]');
       (inner as HTMLElement).click();
       await Promise.resolve();
-      expect(inner!.classList.contains('bx--list-box--expanded')).toBe(false);
+      expect(inner!.classList.contains(`${prefix}--list-box--expanded`)).toBe(
+        false
+      );
     });
 
     it('should always close multi-select when clicking document', async function () {
@@ -95,7 +99,9 @@ describe('bx-multi-select', function () {
       elem.dispatchEvent(new CustomEvent('focusout'));
       await Promise.resolve();
       const inner = elem.shadowRoot!.querySelector('div[role="listbox"]');
-      expect(inner!.classList.contains('bx--list-box--expanded')).toBe(false);
+      expect(inner!.classList.contains(`${prefix}--list-box--expanded`)).toBe(
+        false
+      );
     });
 
     it('should keep multi-select open when clicking on an item', async function () {
@@ -104,29 +110,43 @@ describe('bx-multi-select', function () {
       (itemNode as HTMLElement).click();
       await Promise.resolve();
       const inner = elem.shadowRoot!.querySelector('div[role="listbox"]');
-      expect(inner!.classList.contains('bx--list-box--expanded')).toBe(true);
+      expect(inner!.classList.contains(`${prefix}--list-box--expanded`)).toBe(
+        true
+      );
     });
 
     it('should provide a way to cancel opening', async function () {
-      events.on(elem, 'bx-multi-select-beingtoggled', (event: CustomEvent) => {
-        event.preventDefault();
-      });
+      events.on(
+        elem,
+        `${prefix}-multi-select-beingtoggled`,
+        (event: CustomEvent) => {
+          event.preventDefault();
+        }
+      );
       const inner = elem.shadowRoot!.querySelector('div[role="listbox"]');
       (inner as HTMLElement).click();
       await Promise.resolve();
-      expect(inner!.classList.contains('bx--list-box--expanded')).toBe(false);
+      expect(inner!.classList.contains(`${prefix}--list-box--expanded`)).toBe(
+        false
+      );
     });
 
     it('should provide a way to cancel closing', async function () {
       (elem as BXMultiSelect).open = true;
       await Promise.resolve();
-      events.on(elem, 'bx-multi-select-beingtoggled', (event: CustomEvent) => {
-        event.preventDefault();
-      });
+      events.on(
+        elem,
+        `${prefix}-multi-select-beingtoggled`,
+        (event: CustomEvent) => {
+          event.preventDefault();
+        }
+      );
       const inner = elem.shadowRoot!.querySelector('div[role="listbox"]');
       (inner as HTMLElement).click();
       await Promise.resolve();
-      expect(inner!.classList.contains('bx--list-box--expanded')).toBe(true);
+      expect(inner!.classList.contains(`${prefix}--list-box--expanded`)).toBe(
+        true
+      );
     });
   });
 
@@ -137,14 +157,14 @@ describe('bx-multi-select', function () {
     beforeEach(async function () {
       render(template({ open: true, value: 'all' }), document.body);
       await Promise.resolve();
-      elem = document.body.querySelector('bx-multi-select')!;
-      itemNodes = elem.querySelectorAll('bx-multi-select-item');
+      elem = document.body.querySelector(`${prefix}-multi-select`)!;
+      itemNodes = elem.querySelectorAll(`${prefix}-multi-select-item`);
     });
 
     it('should add/remove "selected" modifier class', async function () {
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="staging"]'
+          `${prefix}-multi-select-item[value="staging"]`
         ) as HTMLElement
       ).click();
       await Promise.resolve();
@@ -158,49 +178,49 @@ describe('bx-multi-select', function () {
     it('should update selection count', async function () {
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="staging"]'
+          `${prefix}-multi-select-item[value="staging"]`
         ) as HTMLElement
       ).click();
       await Promise.resolve();
       expect(
         elem
-          .shadowRoot!.querySelector('.bx--list-box__selection--multi')!
+          .shadowRoot!.querySelector(`.${prefix}--list-box__selection--multi`)!
           .textContent!.trim()
       ).toBe('2');
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="staging"]'
+          `${prefix}-multi-select-item[value="staging"]`
         ) as HTMLElement
       ).click();
       await Promise.resolve();
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="all"]'
+          `${prefix}-multi-select-item[value="all"]`
         ) as HTMLElement
       ).click();
       await Promise.resolve();
       expect(
-        elem.shadowRoot!.querySelector('.bx--list-box__selection--multi')
+        elem.shadowRoot!.querySelector(`.${prefix}--list-box__selection--multi`)
       ).toBeNull();
     });
 
     it('should update value', async function () {
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="staging"]'
+          `${prefix}-multi-select-item[value="staging"]`
         ) as HTMLElement
       ).click();
       await Promise.resolve();
       expect((elem as BXMultiSelect).value).toBe('all,staging');
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="staging"]'
+          `${prefix}-multi-select-item[value="staging"]`
         ) as HTMLElement
       ).click();
       await Promise.resolve();
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="all"]'
+          `${prefix}-multi-select-item[value="all"]`
         ) as HTMLElement
       ).click();
       await Promise.resolve();
@@ -214,11 +234,13 @@ describe('bx-multi-select', function () {
       );
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="staging"]'
+          `${prefix}-multi-select-item[value="staging"]`
         ) as BXMultiSelectItem
       ).highlighted = true;
       await Promise.resolve();
-      elem.shadowRoot!.querySelector('.bx--list-box')!.dispatchEvent(event);
+      elem
+        .shadowRoot!.querySelector(`.${prefix}--list-box`)!
+        .dispatchEvent(event);
       await Promise.resolve();
       expect(itemNodes[0].hasAttribute('selected')).toBe(true);
       expect(itemNodes[1].hasAttribute('selected')).toBe(false);
@@ -234,11 +256,13 @@ describe('bx-multi-select', function () {
       );
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="staging"]'
+          `${prefix}-multi-select-item[value="staging"]`
         ) as BXMultiSelectItem
       ).highlighted = true;
       await Promise.resolve();
-      elem.shadowRoot!.querySelector('.bx--list-box')!.dispatchEvent(event);
+      elem
+        .shadowRoot!.querySelector(`.${prefix}--list-box`)!
+        .dispatchEvent(event);
       await Promise.resolve();
       expect(itemNodes[0].hasAttribute('selected')).toBe(true);
       expect(itemNodes[1].hasAttribute('selected')).toBe(false);
@@ -249,8 +273,8 @@ describe('bx-multi-select', function () {
 
     it('should provide a way to switch item with a value', async function () {
       (elem as BXMultiSelect).value = 'staging';
-      await Promise.resolve(); // Update cycle for `<bx-multi-select>`
-      await Promise.resolve(); // Update cycle for `<bx-multi-select-item>`
+      await Promise.resolve(); // Update cycle for `<cds-multi-select>`
+      await Promise.resolve(); // Update cycle for `<cds-multi-select-item>`
       expect(itemNodes[0].hasAttribute('selected')).toBe(false);
       expect(itemNodes[1].hasAttribute('selected')).toBe(false);
       expect(itemNodes[2].hasAttribute('selected')).toBe(true);
@@ -258,21 +282,27 @@ describe('bx-multi-select', function () {
       expect(itemNodes[4].hasAttribute('selected')).toBe(false);
       expect(
         elem
-          .shadowRoot!.querySelector('.bx--list-box__selection--multi')!
+          .shadowRoot!.querySelector(`.${prefix}--list-box__selection--multi`)!
           .textContent!.trim()
       ).toBe('1');
     });
 
     it('should provide a way to cancel switching item', async function () {
-      events.on(elem, 'bx-multi-select-beingselected', (event: CustomEvent) => {
-        expect(event.detail.item).toBe(
-          document.body.querySelector('bx-multi-select-item[value="staging"]')
-        );
-        event.preventDefault();
-      });
+      events.on(
+        elem,
+        `${prefix}-multi-select-beingselected`,
+        (event: CustomEvent) => {
+          expect(event.detail.item).toBe(
+            document.body.querySelector(
+              `${prefix}-multi-select-item[value="staging"]`
+            )
+          );
+          event.preventDefault();
+        }
+      );
       (
         document.body.querySelector(
-          'bx-multi-select-item[value="staging"]'
+          `${prefix}-multi-select-item[value="staging"]`
         ) as HTMLElement
       ).click();
       await Promise.resolve();
@@ -285,7 +315,7 @@ describe('bx-multi-select', function () {
     });
 
     it('should reflect the added child to the selection', async function () {
-      const itemNode = document.createElement('bx-multi-select-item');
+      const itemNode = document.createElement(`${prefix}-multi-select-item`);
       (itemNode as unknown as BXMultiSelectItem).value = 'value-added';
       elem.appendChild(itemNode);
       (elem as BXMultiSelect).value = 'value-added';
@@ -305,13 +335,15 @@ describe('bx-multi-select', function () {
     beforeEach(async function () {
       render(template({ open: true, value: 'all' }), document.body);
       await Promise.resolve();
-      elem = document.body.querySelector('bx-multi-select')!;
-      itemNodes = elem.querySelectorAll('bx-multi-select-item');
+      elem = document.body.querySelector(`${prefix}-multi-select`)!;
+      itemNodes = elem.querySelectorAll(`${prefix}-multi-select-item`);
     });
 
     it('should support clicking X button for clearing selection', async function () {
       elem
-        .shadowRoot!.querySelector('.bx--list-box__selection--multi svg')!
+        .shadowRoot!.querySelector(
+          `.${prefix}--list-box__selection--multi svg`
+        )!
         .dispatchEvent(new CustomEvent('click', { bubbles: true }));
       await Promise.resolve();
       expect(itemNodes[0].hasAttribute('selected')).toBe(false);
@@ -322,17 +354,19 @@ describe('bx-multi-select', function () {
       await Promise.resolve();
       expect((elem as BXMultiSelect).value).toBe('');
       expect(
-        elem.shadowRoot!.querySelector('.bx--list-box__selection--multi')
+        elem.shadowRoot!.querySelector(`.${prefix}--list-box__selection--multi`)
       ).toBeNull();
     });
 
     it('should support space key on X button for clearing selection', async function () {
       const trigger = elem.shadowRoot!.querySelector(
-        '.bx--list-box__field'
+        `.${prefix}--list-box__field`
       ) as HTMLElement;
       spyOn(trigger!, 'focus');
       elem
-        .shadowRoot!.querySelector('.bx--list-box__selection--multi svg')!
+        .shadowRoot!.querySelector(
+          `.${prefix}--list-box__selection--multi svg`
+        )!
         .dispatchEvent(
           Object.assign(new CustomEvent('keypress', { bubbles: true }), {
             key: ' ',
@@ -346,18 +380,20 @@ describe('bx-multi-select', function () {
       expect(itemNodes[4].hasAttribute('selected')).toBe(false);
       expect((elem as BXMultiSelect).value).toBe('');
       expect(
-        elem.shadowRoot!.querySelector('.bx--list-box__selection--multi')
+        elem.shadowRoot!.querySelector(`.${prefix}--list-box__selection--multi`)
       ).toBeNull();
       expect(trigger!.focus).toHaveBeenCalledTimes(1);
     });
 
     it('should support enter key on X button for clearing selection', async function () {
       const trigger = elem.shadowRoot!.querySelector(
-        '.bx--list-box__field'
+        `.${prefix}--list-box__field`
       ) as HTMLElement;
       spyOn(trigger!, 'focus');
       elem
-        .shadowRoot!.querySelector('.bx--list-box__selection--multi svg')!
+        .shadowRoot!.querySelector(
+          `.${prefix}--list-box__selection--multi svg`
+        )!
         .dispatchEvent(
           Object.assign(new CustomEvent('keypress', { bubbles: true }), {
             key: 'Enter',
@@ -371,7 +407,7 @@ describe('bx-multi-select', function () {
       expect(itemNodes[4].hasAttribute('selected')).toBe(false);
       expect((elem as BXMultiSelect).value).toBe('');
       expect(
-        elem.shadowRoot!.querySelector('.bx--list-box__selection--multi')
+        elem.shadowRoot!.querySelector(`.${prefix}--list-box__selection--multi`)
       ).toBeNull();
       expect(trigger!.focus).toHaveBeenCalledTimes(1);
     });
@@ -383,16 +419,16 @@ describe('bx-multi-select', function () {
     beforeEach(async function () {
       render(template({ open: true, value: 'all' }), document.body);
       await Promise.resolve();
-      elem = document.body.querySelector('bx-multi-select')!;
+      elem = document.body.querySelector(`${prefix}-multi-select`)!;
     });
 
     it('should support arrow key to move focus out of the close button', async function () {
       const trigger = elem.shadowRoot!.querySelector(
-        '.bx--list-box__field'
+        `.${prefix}--list-box__field`
       ) as HTMLElement;
       spyOn(trigger!, 'focus');
       elem
-        .shadowRoot!.querySelector('.bx--list-box__selection--multi')!
+        .shadowRoot!.querySelector(`.${prefix}--list-box__selection--multi`)!
         .dispatchEvent(
           Object.assign(new CustomEvent('keydown', { bubbles: true }), {
             key: 'ArrowDown',

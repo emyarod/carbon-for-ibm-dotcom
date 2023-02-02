@@ -8,6 +8,7 @@
  */
 
 import { html, render } from 'lit';
+import { prefix } from '../../src/globals/settings';
 import { Default } from '../../src/components/slider/slider-story';
 
 /**
@@ -25,15 +26,17 @@ const getValues = (formData: FormData) => {
 
 const template = (props?) =>
   Default({
-    'bx-slider': props,
+    [`${prefix}-slider`]: props,
   });
 
-describe('bx-slider', function () {
+describe(`${prefix}-slider`, function () {
   describe('Rendering', function () {
     it('Should render with minimum attributes', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      expect(document.body.querySelector('bx-slider' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-slider` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });
@@ -52,7 +55,9 @@ describe('bx-slider', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-slider' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-slider` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });

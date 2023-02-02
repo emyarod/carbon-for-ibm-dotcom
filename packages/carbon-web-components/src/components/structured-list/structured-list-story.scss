@@ -7,12 +7,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+@use '@carbon/styles/scss/config' as *;
+
 /* stylelint-disable selector-type-no-unknown */
-bx-structured-list {
+#{$prefix}-structured-list {
   width: 100%;
 }
 
-bx-structured-list-header-skeleton {
+#{$prefix}-structured-list-header-skeleton {
   width: 25%;
 
   &:nth-of-type(3n) {

@@ -18,6 +18,7 @@ import Download16 from '@carbon/web-components/es/icons/download/16';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import { LINK_SIZE } from './link';
 import storyDocs from './link-story.mdx';
+import { prefix } from '../../globals/settings';
 
 const sizes = {
   'Regular size': null,
@@ -38,9 +39,9 @@ export const Default = (args) => {
     target,
     type,
     onClick,
-  } = args?.['bx-link'] ?? {};
+  } = args?.[`${prefix}-link`] ?? {};
   return html`
-    <bx-link
+    <cds-link
       ?disabled="${disabled}"
       download="${ifDefined(download)}"
       href="${ifDefined(href)}"
@@ -53,7 +54,7 @@ export const Default = (args) => {
       type="${ifDefined(type)}"
       @click="${onClick}">
       Link
-    </bx-link>
+    </cds-link>
   `;
 };
 
@@ -72,9 +73,9 @@ export const pairedWithIcon = (args) => {
     target,
     type,
     onClick,
-  } = args?.['bx-link'] ?? {};
+  } = args?.[`${prefix}-link`] ?? {};
   return html`
-    <bx-link
+    <cds-link
       ?disabled="${disabled}"
       download="${ifDefined(download)}"
       href="${ifDefined(href)}"
@@ -87,7 +88,7 @@ export const pairedWithIcon = (args) => {
       type="${ifDefined(type)}"
       @click="${onClick}">
       Download ${Download16({ slot: 'icon' })}
-    </bx-link>
+    </cds-link>
   `;
 };
 
@@ -96,7 +97,7 @@ export default {
   parameters: {
     ...storyDocs.parameters,
     knobs: {
-      'bx-link': () => ({
+      [`${prefix}-link`]: () => ({
         disabled: boolean('Disabled (disabled)', false),
         href: textNullable(
           'Link href (href)',

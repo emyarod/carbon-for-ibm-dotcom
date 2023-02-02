@@ -7,7 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-describe('bx-overflow-menu', () => {
+const { prefix } = require('../../../src/globals/settings');
+
+describe(`${prefix}-overflow-menu`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-overflow-menu--default`
@@ -15,12 +17,12 @@ describe('bx-overflow-menu', () => {
   });
 
   it('should have overflow menu interactive', async () => {
-    await page.click('bx-overflow-menu');
-    await expect(page).toHaveSelector('bx-overflow-menu-body', {
+    await page.click(`${prefix}-overflow-menu`);
+    await expect(page).toHaveSelector(`${prefix}-overflow-menu-body`, {
       state: 'visible',
     });
     await page.click('html');
-    await expect(page).toHaveSelector('bx-overflow-menu-body', {
+    await expect(page).toHaveSelector(`${prefix}-overflow-menu-body`, {
       state: 'hidden',
     });
   });

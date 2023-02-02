@@ -7,23 +7,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import settings from 'carbon-components/es/globals/js/settings';
 import { classMap } from 'lit/directives/class-map.js';
 import { LitElement, html, svg } from 'lit';
 import { property, customElement, query } from 'lit/decorators.js';
+import { prefix } from '../../globals/settings';
 import CheckmarkFilled16 from '@carbon/icons/lib/checkmark--filled/16';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import FocusMixin from '../../globals/mixins/focus';
 import { TILE_COLOR_SCHEME } from './defs';
 import styles from './tile.scss';
 
-const { prefix } = settings;
-
 /**
  * Multi-selectable tile.
  *
- * @element bx-selectable-tile
- * @fires bx-selectable-tile-changed - The custom event fired after this selectable tile changes its selected state.
+ * @element cds-selectable-tile
+ * @fires cds-selectable-tile-changed - The custom event fired after this selectable tile changes its selected state.
  */
 @customElement(`${prefix}-selectable-tile`)
 class BXSelectableTile extends FocusMixin(LitElement) {

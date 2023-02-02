@@ -9,9 +9,13 @@
 
 const path = require('path');
 const fs = require('fs-extra');
-const { setup: setupDevServer, teardown: teardownDevServer } = require('jest-dev-server');
+const {
+  setup: setupDevServer,
+  teardown: teardownDevServer,
+} = require('jest-dev-server');
 const exec = require('../exec');
 const replaceDependencies = require('../replace-dependencies');
+const { prefix } = require('../../../src/globals/settings');
 
 const PORT = 8080;
 
@@ -36,10 +40,10 @@ describe('Angular example', () => {
   });
 
   it('should have dropdown interactive', async () => {
-    await expect(page).toClick('bx-dropdown');
-    await expect(page).toMatchElement('bx-dropdown[open]');
-    await expect(page).toClick('bx-dropdown');
-    await expect(page).toMatchElement('bx-dropdown:not([open])');
+    await expect(page).toClick(`${prefix}-dropdown`);
+    await expect(page).toMatchElement(`${prefix}-dropdown[open]`);
+    await expect(page).toClick(`${prefix}-dropdown`);
+    await expect(page).toMatchElement(`${prefix}-dropdown:not([open])`);
   });
 
   afterAll(async () => {

@@ -7,7 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-describe('bx-content-switcher', () => {
+const { prefix } = require('../../../src/globals/settings');
+
+describe(`${prefix}-content-switcher`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-content-switcher--default`
@@ -15,9 +17,9 @@ describe('bx-content-switcher', () => {
   });
 
   it('should have content switcher interactive', async () => {
-    await page.click('bx-content-switcher-item[value="router"] button');
+    await page.click(`${prefix}-content-switcher-item[value="router"] button`);
     await expect(page).toHaveSelector(
-      'bx-content-switcher-item[value="router"] button[aria-selected="true"]'
+      `${prefix}-content-switcher-item[value="router"] button[aria-selected="true"]`
     );
   });
 });

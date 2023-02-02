@@ -10,24 +10,22 @@
 import { classMap } from 'lit/directives/class-map.js';
 import { html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import settings from 'carbon-components/es/globals/js/settings';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { prefix } from '../../globals/settings';
 import BXCheckbox from '../checkbox/checkbox';
 import { TOGGLE_SIZE } from './defs';
 import styles from './toggle.scss';
 
 export { TOGGLE_SIZE };
 
-const { prefix } = settings;
-
 /**
  * Basic toggle.
  *
- * @element bx-toggle
+ * @element cds-toggle
  * @slot label-text - The label text.
  * @slot checked-text - The text for the checked state.
  * @slot unchecked-text - The text for the unchecked state.
- * @fires bx-toggle-changed - The custom event fired after this changebox changes its checked state.
+ * @fires cds-toggle-changed - The custom event fired after this changebox changes its checked state.
  */
 @customElement(`${prefix}-toggle`)
 class BXToggle extends BXCheckbox {

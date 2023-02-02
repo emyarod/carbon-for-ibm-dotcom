@@ -7,7 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-describe('bx-tooltip', () => {
+const { prefix } = require('../../../src/globals/settings');
+
+describe(`${prefix}-tooltip`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-tooltip--default`
@@ -15,9 +17,13 @@ describe('bx-tooltip', () => {
   });
 
   it('should have overflow menu interactive', async () => {
-    await page.click('bx-tooltip');
-    await expect(page).toHaveSelector('bx-tooltip-body', { state: 'visible' });
+    await page.click(`${prefix}-tooltip`);
+    await expect(page).toHaveSelector(`${prefix}-tooltip-body`, {
+      state: 'visible',
+    });
     await page.click('html');
-    await expect(page).toHaveSelector('bx-tooltip-body', { state: 'hidden' });
+    await expect(page).toHaveSelector(`${prefix}-tooltip-body`, {
+      state: 'hidden',
+    });
   });
 });

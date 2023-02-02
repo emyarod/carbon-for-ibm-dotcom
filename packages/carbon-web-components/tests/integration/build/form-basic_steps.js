@@ -9,9 +9,13 @@
 
 const path = require('path');
 const fs = require('fs-extra');
-const { setup: setupDevServer, teardown: teardownDevServer } = require('jest-dev-server');
+const {
+  setup: setupDevServer,
+  teardown: teardownDevServer,
+} = require('jest-dev-server');
 const exec = require('../exec');
 const replaceDependencies = require('../replace-dependencies');
+const { prefix } = require('../../../src/globals/settings');
 
 const PORT = 1235;
 
@@ -24,7 +28,10 @@ describe('Basic form example', () => {
     await replaceDependencies([`${tmpDir}/form-basic/package.json`]);
     await exec('yarn', ['install'], { cwd: `${tmpDir}/form-basic` });
     await setupDevServer({
-      command: `cd ${tmpDir}/form-basic && node ${path.resolve(__dirname, 'webpack-server.js')} --port=${PORT}`,
+      command: `cd ${tmpDir}/form-basic && node ${path.resolve(
+        __dirname,
+        'webpack-server.js'
+      )} --port=${PORT}`,
       launchTimeout: Number(process.env.LAUNCH_TIMEOUT),
       port: PORT,
     });
@@ -39,16 +46,19 @@ describe('Basic form example', () => {
   }, Number(process.env.LAUNCH_TIMEOUT));
 
   it('should detect an invalid data', async () => {
-    await expect(page).toFill('bx-input[name="username"]', 'john');
-    await expect(page).toFill('bx-input[name="password"]', 'foo');
-    await expect(page).toClick('bx-btn[kind="primary"]');
-    await expect(page).toMatchElement('bx-input[name="password"][invalid]', { timeout: 2000 });
+    await expect(page).toFill(`${prefix}-input[name="username"]', 'john`);
+    await expect(page).toFill(`${prefix}-input[name="password"]', 'foo`);
+    await expect(page).toClick(`${prefix}-btn[kind="primary"]`);
+    await expect(page).toMatchElement(
+      `${prefix}-input[name="password"][invalid]`,
+      { timeout: 2000 }
+    );
   });
 
   it('should submit the data once all data is valid', async () => {
-    await expect(page).toFill('bx-input[name="username"]', 'john');
-    await expect(page).toFill('bx-input[name="password"]', 'form');
-    await expect(page).toClick('bx-btn[kind="primary"]');
+    await expect(page).toFill(`${prefix}-input[name="username"]', 'john`);
+    await expect(page).toFill(`${prefix}-input[name="password"]', 'form`);
+    await expect(page).toClick(`${prefix}-btn[kind="primary"]`);
     await expect(page).toMatch('You submitted:', { timeout: 2000 });
   });
 

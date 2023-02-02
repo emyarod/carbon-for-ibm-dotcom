@@ -18,6 +18,7 @@ import {
 import './overflow-menu-body';
 import './overflow-menu-item';
 import storyDocs from './overflow-menu-story.mdx';
+import { prefix } from '../../globals/settings';
 
 const colorSchemes = {
   [`Regular`]: null,
@@ -39,19 +40,19 @@ const sizes = {
 
 export const Default = (args) => {
   const { open, colorScheme, disabled, direction, size } =
-    args?.['bx-overflow-menu'] ?? {};
+    args?.[`${prefix}-overflow-menu`] ?? {};
   return html`
-    <bx-overflow-menu ?open="${open}" ?disabled="${disabled}" size="${size}">
-      <bx-overflow-menu-body
+    <cds-overflow-menu ?open="${open}" ?disabled="${disabled}" size="${size}">
+      <cds-overflow-menu-body
         color-scheme="${ifDefined(colorScheme)}"
         direction="${ifDefined(direction)}">
-        <bx-overflow-menu-item>Option 1</bx-overflow-menu-item>
-        <bx-overflow-menu-item>Option 2</bx-overflow-menu-item>
-        <bx-overflow-menu-item>Option 3</bx-overflow-menu-item>
-        <bx-overflow-menu-item>Option 4</bx-overflow-menu-item>
-        <bx-overflow-menu-item>Option 5</bx-overflow-menu-item>
-      </bx-overflow-menu-body>
-    </bx-overflow-menu>
+        <cds-overflow-menu-item>Option 1</cds-overflow-menu-item>
+        <cds-overflow-menu-item>Option 2</cds-overflow-menu-item>
+        <cds-overflow-menu-item>Option 3</cds-overflow-menu-item>
+        <cds-overflow-menu-item>Option 4</cds-overflow-menu-item>
+        <cds-overflow-menu-item>Option 5</cds-overflow-menu-item>
+      </cds-overflow-menu-body>
+    </cds-overflow-menu>
   `;
 };
 
@@ -62,12 +63,12 @@ export default {
   parameters: {
     ...storyDocs.parameters,
     knobs: {
-      'bx-overflow-menu': () => ({
+      [`${prefix}-overflow-menu`]: () => ({
         open: boolean('Open (open)', false),
         colorScheme: select('Color scheme (color-scheme)', colorSchemes, null),
         disabled: boolean('Disabled (disabled)', false),
         direction: select(
-          'Direction (direction in <bx-overflow-menu-body>)',
+          'Direction (direction in <cds-overflow-menu-body>)',
           directions,
           FLOATING_MENU_DIRECTION.BOTTOM
         ),

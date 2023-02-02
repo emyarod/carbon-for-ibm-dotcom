@@ -336,7 +336,7 @@ abstract class BXFloatingMenu extends HostListenerMixin(
    * The CSS selector to find the element to put this floating menu in.
    */
   static get selectorContainer() {
-    return '[data-floating-menu-container],bx-modal';
+    return '[data-floating-menu-container],cds-modal';
   }
   static shadowRootOptions = {
     ...LitElement.shadowRootOptions,

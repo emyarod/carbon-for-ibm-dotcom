@@ -11,6 +11,7 @@ import { html } from 'lit';
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { prefix } from '../../globals/settings';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import './checkbox';
 import storyDocs from './checkbox-story.mdx';
@@ -25,9 +26,9 @@ export const Default = (args) => {
     name,
     value,
     onChange,
-  } = args?.['bx-checkbox'] ?? {};
+  } = args?.[`${prefix}-checkbox`] ?? {};
   return html`
-    <bx-checkbox
+    <cds-checkbox
       ?checked="${checked}"
       ?disabled="${disabled}"
       ?hide-label="${hideLabel}"
@@ -35,7 +36,7 @@ export const Default = (args) => {
       label-text="${ifDefined(labelText)}"
       name="${ifDefined(name)}"
       value="${ifDefined(value)}"
-      @bx-checkbox-changed="${onChange}"></bx-checkbox>
+      @cds-checkbox-changed="${onChange}"></cds-checkbox>
   `;
 };
 
@@ -46,7 +47,7 @@ export default {
   parameters: {
     ...storyDocs.parameters,
     knobs: {
-      'bx-checkbox': () => ({
+      [`${prefix}-checkbox`]: () => ({
         checked: boolean('Checked (checked)', false),
         disabled: boolean('Disabled (disabled)', false),
         hideLabel: boolean('Hide label (hide-label)', false),
@@ -54,7 +55,7 @@ export default {
         labelText: textNullable('Label text (label-text)', 'Checkbox'),
         name: textNullable('Name (name)', ''),
         value: textNullable('Value (value)', ''),
-        onChange: action('bx-checkbox-changed'),
+        onChange: action(`${prefix}-checkbox-changed`),
       }),
     },
   },

@@ -24,6 +24,7 @@ import { TOOLTIP_ALIGNMENT, TOOLTIP_DIRECTION } from './tooltip-definition';
 import './tooltip-icon';
 import styles from './tooltip-story.scss';
 import storyDocs from './tooltip-story.mdx';
+import { prefix } from '../../globals/settings';
 
 const tooltipBodyDirections = {
   [`Top (${FLOATING_MENU_DIRECTION.TOP})`]: FLOATING_MENU_DIRECTION.TOP,
@@ -47,14 +48,14 @@ const tooltipDefinitionDirections = {
 };
 
 export const Default = (args) => {
-  const { open } = args?.['bx-tooltip'] ?? {};
-  const { alignment, direction } = args?.['bx-tooltip-body'] ?? {};
+  const { open } = args?.[`${prefix}-tooltip`] ?? {};
+  const { alignment, direction } = args?.[`${prefix}-tooltip-body`] ?? {};
   return html`
     <style>
       ${styles}
     </style>
-    <bx-tooltip ?open="${open}">
-      <bx-tooltip-body
+    <cds-tooltip ?open="${open}">
+      <cds-tooltip-body
         direction="${ifDefined(direction)}"
         alignment="${ifDefined(alignment)}">
         <p>
@@ -62,8 +63,8 @@ export const Default = (args) => {
           that should appear inside. If more room is needed please use a modal
           instead.
         </p>
-      </bx-tooltip-body>
-    </bx-tooltip>
+      </cds-tooltip-body>
+    </cds-tooltip>
   `;
 };
 
@@ -71,17 +72,17 @@ Default.storyName = 'Default';
 
 Default.parameters = {
   knobs: {
-    'bx-tooltip': () => ({
+    [`${prefix}-tooltip`]: () => ({
       open: boolean('Open (open)', false),
     }),
-    'bx-tooltip-body': () => ({
+    [`${prefix}-tooltip-body`]: () => ({
       alignment: select(
         'Tooltip alignment to trigger button (alignment)',
         tooltipAlignments,
         TOOLTIP_ALIGNMENT.CENTER
       ),
       direction: select(
-        'Direction (direction in <bx-tooltip-body>)',
+        'Direction (direction in <cds-tooltip-body>)',
         tooltipBodyDirections,
         FLOATING_MENU_DIRECTION.BOTTOM
       ),
@@ -91,14 +92,14 @@ Default.parameters = {
 
 export const definition = (args) => {
   const { alignment, bodyText, direction } =
-    args?.['bx-tooltip-definition'] ?? {};
+    args?.[`${prefix}-tooltip-definition`] ?? {};
   return html`
-    <bx-tooltip-definition
+    <cds-tooltip-definition
       alignment="${ifDefined(alignment)}"
       body-text="${ifDefined(bodyText)}"
       direction="${ifDefined(direction)}">
       Definition Tooltip
-    </bx-tooltip-definition>
+    </cds-tooltip-definition>
   `;
 };
 
@@ -106,7 +107,7 @@ definition.storyName = 'Definition tooltip';
 
 definition.parameters = {
   knobs: {
-    'bx-tooltip-definition': () => ({
+    [`${prefix}-tooltip-definition`]: () => ({
       alignment: select(
         'Tooltip alignment to trigger button (alignment)',
         tooltipAlignments,
@@ -126,14 +127,15 @@ definition.parameters = {
 };
 
 export const icon = (args) => {
-  const { alignment, bodyText, direction } = args?.['bx-tooltip-icon'] ?? {};
+  const { alignment, bodyText, direction } =
+    args?.[`${prefix}-tooltip-icon`] ?? {};
   return html`
-    <bx-tooltip-icon
+    <cds-tooltip-icon
       alignment="${ifDefined(alignment)}"
       body-text="${ifDefined(bodyText)}"
       direction="${ifDefined(direction)}">
       ${Filter16()}
-    </bx-tooltip-icon>
+    </cds-tooltip-icon>
   `;
 };
 
@@ -141,7 +143,8 @@ icon.storyName = 'Icon tooltip';
 
 icon.parameters = {
   knobs: {
-    'bx-tooltip-icon': definition.parameters.knobs['bx-tooltip-definition'],
+    [`${prefix}-tooltip-icon`]:
+      definition.parameters.knobs[`${prefix}-tooltip-definition`],
   },
 };
 

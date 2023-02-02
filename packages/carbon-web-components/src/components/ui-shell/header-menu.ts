@@ -7,10 +7,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import settings from 'carbon-components/es/globals/js/settings';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { LitElement, html } from 'lit';
 import { property, customElement, query } from 'lit/decorators.js';
+import { prefix } from '../../globals/settings';
 import ChevronDownGlyph from '@carbon/icons/lib/chevron--down/16';
 import FocusMixin from '../../globals/mixins/focus';
 import HostListenerMixin from '../../globals/mixins/host-listener';
@@ -18,12 +18,10 @@ import HostListener from '../../globals/decorators/host-listener';
 import { forEach } from '../../globals/internal/collection-helpers';
 import styles from './header.scss';
 
-const { prefix } = settings;
-
 /**
  * Header menu.
  *
- * @element bx-header-menu
+ * @element cds-header-menu
  * @csspart trigger The trigger button.
  * @csspart trigger-icon The trigger button icon.
  * @csspart menu-body The menu body.

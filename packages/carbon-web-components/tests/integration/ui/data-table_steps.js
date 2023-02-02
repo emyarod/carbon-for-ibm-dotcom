@@ -7,6 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const { prefix } = require('../../../src/globals/settings');
+
 describe('data-table', () => {
   beforeAll(async () => {
     await page.goto(
@@ -15,16 +17,16 @@ describe('data-table', () => {
   });
 
   it('should have the expando interactive', async () => {
-    await page.click('bx-table-expand-row:nth-of-type(1) button');
+    await page.click(`${prefix}-table-expand-row:nth-of-type(1) button`);
     await expect(page).toHaveSelector(
-      'bx-table-expanded-row:nth-of-type(1) .bx--child-row-inner-container',
+      `${prefix}-table-expanded-row:nth-of-type(1) .${prefix}--child-row-inner-container`,
       {
         state: 'visible',
       }
     );
-    await page.click('bx-table-expand-row:nth-of-type(1) button');
+    await page.click(`${prefix}-table-expand-row:nth-of-type(1) button`);
     await expect(page).toHaveSelector(
-      'bx-table-expanded-row:nth-of-type(1) .bx--child-row-inner-container',
+      `${prefix}-table-expanded-row:nth-of-type(1) .${prefix}--child-row-inner-container`,
       { state: 'hidden' }
     );
   });

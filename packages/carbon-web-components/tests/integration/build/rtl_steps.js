@@ -9,9 +9,13 @@
 
 const path = require('path');
 const fs = require('fs-extra');
-const { setup: setupDevServer, teardown: teardownDevServer } = require('jest-dev-server');
+const {
+  setup: setupDevServer,
+  teardown: teardownDevServer,
+} = require('jest-dev-server');
 const exec = require('../exec');
 const replaceDependencies = require('../replace-dependencies');
+const { prefix } = require('../../../src/globals/settings');
 
 const PORT = 8083;
 
@@ -40,9 +44,13 @@ describe('RTL example', () => {
 
   it('should have RTL style applied', async () => {
     const transformValue = await page.evaluate((slider) => {
-      const filledTrackContainer = slider.shadowRoot.querySelector('.bx-ce--slider__filled-track-container');
-      return filledTrackContainer.ownerDocument.defaultView.getComputedStyle(filledTrackContainer).getPropertyValue('transform');
-    }, await expect(page).toMatchElement('bx-slider'));
+      const filledTrackContainer = slider.shadowRoot.querySelector(
+        `.${prefix}-ce--slider__filled-track-container`
+      );
+      return filledTrackContainer.ownerDocument.defaultView
+        .getComputedStyle(filledTrackContainer)
+        .getPropertyValue('transform');
+    }, await expect(page).toMatchElement(`${prefix}-slider`));
     expect(transformValue).toEqual(expect.stringMatching(/matrix\( *-1/));
   });
 

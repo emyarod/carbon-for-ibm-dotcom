@@ -10,6 +10,7 @@
 import { html } from 'lit';
 import { action } from '@storybook/addon-actions';
 import { boolean, select } from '@storybook/addon-knobs';
+import { prefix } from '../../globals/settings';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { CONTENT_SWITCHER_SIZE } from './content-switcher';
@@ -31,7 +32,7 @@ export const Default = (args) => {
     onBeforeSelect = noop,
     onSelect = noop,
     size,
-  } = args?.['bx-content-switcher'] ?? {};
+  } = args?.[`${prefix}-content-switcher`] ?? {};
   const handleBeforeSelected = (event: CustomEvent) => {
     onBeforeSelect(event);
     if (disableSelection) {
@@ -39,23 +40,27 @@ export const Default = (args) => {
     }
   };
   return html`
-    <bx-content-switcher
+    <cds-content-switcher
       value="${ifDefined(value)}"
-      @bx-content-switcher-beingselected="${handleBeforeSelected}"
-      @bx-content-switcher-selected="${onSelect}"
+      @cds-content-switcher-beingselected="${handleBeforeSelected}"
+      @cds-content-switcher-selected="${onSelect}"
       size="${size}">
-      <bx-content-switcher-item value="all">Option 1</bx-content-switcher-item>
-      <bx-content-switcher-item value="cloudFoundry" disabled
-        >Option 2</bx-content-switcher-item
+      <cds-content-switcher-item value="all"
+        >Option 1</cds-content-switcher-item
       >
-      <bx-content-switcher-item value="staging"
-        >Option 3</bx-content-switcher-item
+      <cds-content-switcher-item value="cloudFoundry" disabled
+        >Option 2</cds-content-switcher-item
       >
-      <bx-content-switcher-item value="dea">Option 4</bx-content-switcher-item>
-      <bx-content-switcher-item value="router"
-        >Option 5</bx-content-switcher-item
+      <cds-content-switcher-item value="staging"
+        >Option 3</cds-content-switcher-item
       >
-    </bx-content-switcher>
+      <cds-content-switcher-item value="dea"
+        >Option 4</cds-content-switcher-item
+      >
+      <cds-content-switcher-item value="router"
+        >Option 5</cds-content-switcher-item
+      >
+    </cds-content-switcher>
   `;
 };
 
@@ -66,15 +71,15 @@ export default {
   parameters: {
     ...storyDocs.parameters,
     knobs: {
-      'bx-content-switcher': () => ({
+      [`${prefix}-content-switcher`]: () => ({
         value: textNullable('The value of the selected item (value)', ''),
         size: select('Button size (size)', sizes, null),
         disableSelection: boolean(
-          'Disable user-initiated selection change (Call event.preventDefault() in bx-content-switcher-beingselected event)',
+          `Disable user-initiated selection change (Call event.preventDefault() in ${prefix}-content-switcher-beingselected event)`,
           false
         ),
-        onBeforeSelect: action('bx-content-switcher-beingselected'),
-        onSelect: action('bx-content-switcher-selected'),
+        onBeforeSelect: action(`${prefix}-content-switcher-beingselected`),
+        onSelect: action(`${prefix}-content-switcher-selected`),
       }),
     },
   },

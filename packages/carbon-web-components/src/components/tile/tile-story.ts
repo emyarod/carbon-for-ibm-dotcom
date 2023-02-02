@@ -18,6 +18,7 @@ import './radio-tile';
 import './selectable-tile';
 import './expandable-tile';
 import storyDocs from './tile-story.mdx';
+import { prefix } from '../../globals/settings';
 
 const colorSchemes = {
   [`Regular`]: null,
@@ -25,9 +26,9 @@ const colorSchemes = {
 };
 
 export const Default = (args) => {
-  const { colorScheme } = args?.['bx-tile'] ?? {};
+  const { colorScheme } = args?.[`${prefix}-tile`] ?? {};
   return html`
-    <bx-tile color-scheme="${ifDefined(colorScheme)}">Default tile</bx-tile>
+    <cds-tile color-scheme="${ifDefined(colorScheme)}">Default tile</cds-tile>
   `;
 };
 
@@ -35,7 +36,7 @@ Default.storyName = 'Default';
 
 Default.parameters = {
   knobs: {
-    'bx-tile': () => ({
+    [`${prefix}-tile`]: () => ({
       colorScheme: select('Color scheme (color-scheme)', colorSchemes, null),
     }),
   },
@@ -52,9 +53,9 @@ export const clickable = (args) => {
     rel,
     target,
     type,
-  } = args?.['bx-clickable-tile'] ?? {};
+  } = args?.[`${prefix}-clickable-tile`] ?? {};
   return html`
-    <bx-clickable-tile
+    <cds-clickable-tile
       color-scheme="${ifDefined(colorScheme)}"
       ?disabled="${disabled}"
       download="${ifDefined(download)}"
@@ -65,13 +66,13 @@ export const clickable = (args) => {
       target="${ifDefined(target)}"
       type="${ifDefined(type)}">
       Clickable tile
-    </bx-clickable-tile>
+    </cds-clickable-tile>
   `;
 };
 
 clickable.parameters = {
   knobs: {
-    'bx-clickable-tile': () => ({
+    [`${prefix}-clickable-tile`]: () => ({
       colorScheme: select('Color scheme (color-scheme)', colorSchemes, null),
       disabled: boolean('Disabled (disabled)', false),
       href: textNullable('Href for clickable UI (href)', ''),
@@ -81,34 +82,34 @@ clickable.parameters = {
 
 export const singleSelectable = (args) => {
   const { checkmarkLabel, colorScheme, name, value, onInput } =
-    args?.['bx-radio-tile'] ?? {};
+    args?.[`${prefix}-radio-tile`] ?? {};
   return html`
     <fieldset>
       <legend>Single-select tiles</legend>
-      <bx-radio-tile
+      <cds-radio-tile
         checkmark-label="${ifDefined(checkmarkLabel)}"
         color-scheme="${ifDefined(colorScheme)}"
         name="${ifDefined(name)}"
         value="${ifDefined(value)}"
         @input="${onInput}">
         Single-select Tile
-      </bx-radio-tile>
-      <bx-radio-tile
+      </cds-radio-tile>
+      <cds-radio-tile
         checkmark-label="${ifDefined(checkmarkLabel)}"
         color-scheme="${ifDefined(colorScheme)}"
         name="${ifDefined(name)}"
         value="${ifDefined(value)}"
         @input="${onInput}">
         Single-select Tile
-      </bx-radio-tile>
-      <bx-radio-tile
+      </cds-radio-tile>
+      <cds-radio-tile
         checkmark-label="${ifDefined(checkmarkLabel)}"
         color-scheme="${ifDefined(colorScheme)}"
         name="${ifDefined(name)}"
         value="${ifDefined(value)}"
         @input="${onInput}">
         Single-select Tile
-      </bx-radio-tile>
+      </cds-radio-tile>
     </fieldset>
   `;
 };
@@ -117,7 +118,7 @@ singleSelectable.storyName = 'Single-selectable';
 
 singleSelectable.parameters = {
   knobs: {
-    'bx-radio-tile': () => ({
+    [`${prefix}-radio-tile`]: () => ({
       checkmarkLabel: textNullable(
         'Label text for the checkmark icon (checkmark-label)',
         ''
@@ -132,9 +133,9 @@ singleSelectable.parameters = {
 
 export const multiSelectable = (args) => {
   const { checkmarkLabel, colorScheme, name, selected, value, onInput } =
-    args?.['bx-selectable-tile'] ?? {};
+    args?.[`${prefix}-selectable-tile`] ?? {};
   return html`
-    <bx-selectable-tile
+    <cds-selectable-tile
       checkmark-label="${ifDefined(checkmarkLabel)}"
       color-scheme="${ifDefined(colorScheme)}"
       name="${ifDefined(name)}"
@@ -142,7 +143,7 @@ export const multiSelectable = (args) => {
       value="${ifDefined(value)}"
       @input="${onInput}">
       Multi-select Tile
-    </bx-selectable-tile>
+    </cds-selectable-tile>
   `;
 };
 
@@ -150,8 +151,8 @@ multiSelectable.storyName = 'Multi-selectable';
 
 multiSelectable.parameters = {
   knobs: {
-    'bx-selectable-tile': () => ({
-      ...singleSelectable.parameters.knobs['bx-radio-tile'](),
+    [`${prefix}-selectable-tile`]: () => ({
+      ...singleSelectable.parameters.knobs[`${prefix}-radio-tile`](),
       selected: boolean('Selected (selected)', false),
     }),
   },
@@ -159,7 +160,7 @@ multiSelectable.parameters = {
 
 export const expandable = (args) => {
   const { colorScheme, expanded, disableChange, onBeforeChange, onChange } =
-    args?.['bx-expandable-tile'] ?? {};
+    args?.[`${prefix}-expandable-tile`] ?? {};
   const handleBeforeChanged = (event: CustomEvent) => {
     onBeforeChange(event);
     if (disableChange) {
@@ -167,35 +168,34 @@ export const expandable = (args) => {
     }
   };
   return html`
-    <bx-expandable-tile
+    <cds-expandable-tile
       color-scheme="${ifDefined(colorScheme)}"
       ?expanded="${expanded}"
-      @bx-expandable-tile-beingchanged=${handleBeforeChanged}
-      @bx-expandable-tile-changed=${onChange}>
-      <bx-tile-above-the-fold-content
+      @cds-expandable-tile-beingchanged=${handleBeforeChanged}
+      @cds-expandable-tile-changed=${onChange}>
+      <cds-tile-above-the-fold-content
         slot="above-the-fold-content"
         style="height: 200px">
         Above the fold content here
-      </bx-tile-above-the-fold-content>
-      <bx-tile-below-the-fold-content style="height: 300px">
+      </cds-tile-above-the-fold-content>
+      <cds-tile-below-the-fold-content style="height: 300px">
         Below the fold content here
-      </bx-tile-below-the-fold-content>
-    </bx-expandable-tile>
+      </cds-tile-below-the-fold-content>
+    </cds-expandable-tile>
   `;
 };
 
 expandable.parameters = {
   knobs: {
-    'bx-expandable-tile': () => ({
+    [`${prefix}-expandable-tile`]: () => ({
       colorScheme: select('Color scheme (color-scheme)', colorSchemes, null),
       expanded: boolean('Expanded (expanded)', false),
       disableChange: boolean(
-        'Disable user-initiated change in expanded state ' +
-          '(Call event.preventDefault() in bx-expandable-tile-beingchanged event)',
+        `Disable user-initiated change in expanded state (Call event.preventDefault() in ${prefix}-expandable-tile-beingchanged event)`,
         false
       ),
-      onBeforeChange: action('bx-expandable-tile-beingchanged'),
-      onChange: action('bx-expandable-tile-changed'),
+      onBeforeChange: action(`${prefix}-expandable-tile-beingchanged`),
+      onChange: action(`${prefix}-expandable-tile-changed`),
     }),
   },
 };

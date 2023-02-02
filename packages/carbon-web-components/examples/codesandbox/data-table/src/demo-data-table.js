@@ -21,7 +21,10 @@ import '@carbon/web-components/es/components/overflow-menu/overflow-menu-item';
 import '@carbon/web-components/es/components/pagination/pagination';
 import '@carbon/web-components/es/components/pagination/page-sizes-select';
 import '@carbon/web-components/es/components/pagination/pages-select';
-import { TABLE_COLOR_SCHEME, TABLE_SIZE } from '@carbon/web-components/es/components/data-table/table';
+import {
+  TABLE_COLOR_SCHEME,
+  TABLE_SIZE,
+} from '@carbon/web-components/es/components/data-table/table';
 import '@carbon/web-components/es/components/data-table/table-head';
 import '@carbon/web-components/es/components/data-table/table-header-row';
 import { TABLE_SORT_DIRECTION } from '@carbon/web-components/es/components/data-table/table-header-cell';
@@ -37,6 +40,7 @@ import '@carbon/web-components/es/components/data-table/table-toolbar-search';
 import '@carbon/web-components/es/components/data-table/table-batch-actions';
 import '@carbon/web-components/es/components/data-table/table-header-cell-skeleton';
 import '@carbon/web-components/es/components/data-table/table-cell-skeleton';
+const { prefix } = require('../../../src/globals/settings');
 
 /**
  * @param row A table row.
@@ -44,7 +48,9 @@ import '@carbon/web-components/es/components/data-table/table-cell-skeleton';
  * @returns `true` if the given table row matches the given search string.
  */
 const doesRowMatchSearchString = (row, searchString) =>
-  Object.keys(row).some((key) => key !== 'id' && String(row[key] ?? '').indexOf(searchString) >= 0);
+  Object.keys(row).some(
+    (key) => key !== 'id' && String(row[key] ?? '').indexOf(searchString) >= 0
+  );
 
 /**
  * A class to manage table states, like selection and sorting.
@@ -55,7 +61,7 @@ const doesRowMatchSearchString = (row, searchString) =>
  */
 // @ts-ignore `BXCEDemoDataTable` is used (only) for type reference
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-@customElement('bx-ce-demo-data-table')
+@customElement(`${prefix}-ce-demo-data-table`)
 class BXCEDemoDataTable extends LitElement {
   /**
    * The debounced handler for user-initiated change in search string.
@@ -113,7 +119,9 @@ class BXCEDemoDataTable extends LitElement {
   _handleCancelSelection() {
     const { _rows: oldRows, _searchString: searchString } = this;
     this._rows = this._rows.map((row) =>
-      searchString && !doesRowMatchSearchString(row, searchString) ? row : { ...row, selected: false }
+      searchString && !doesRowMatchSearchString(row, searchString)
+        ? row
+        : { ...row, selected: false }
     );
     this.requestUpdate('_rows', oldRows);
   }
@@ -129,7 +137,7 @@ class BXCEDemoDataTable extends LitElement {
   }
 
   /**
-   * Handles an event to change in selection of rows, fired from `<bx-table-row>`.
+   * Handles an event to change in selection of rows, fired from `<cds-table-row>`.
    * @param {CustomEvent} event The event.
    */
   _handleChangeSelection({ defaultPrevented, detail, target }) {
@@ -137,13 +145,15 @@ class BXCEDemoDataTable extends LitElement {
       const { rowId: changedRowId } = target.dataset;
       const { selected } = detail;
       const { _rows: oldRows } = this;
-      this._rows = oldRows.map((row) => (Number(changedRowId) !== row.id ? row : { ...row, selected }));
+      this._rows = oldRows.map((row) =>
+        Number(changedRowId) !== row.id ? row : { ...row, selected }
+      );
       this.requestUpdate('_rows', oldRows);
     }
   }
 
   /**
-   * Handles an event to change in selection of all rows, fired from `<bx-table-header-row>`.
+   * Handles an event to change in selection of all rows, fired from `<cds-table-header-row>`.
    * @param {CustomEvent} event The event.
    */
   _handleChangeSelectionAll({ defaultPrevented, detail }) {
@@ -151,14 +161,16 @@ class BXCEDemoDataTable extends LitElement {
       const { selected } = detail;
       const { _rows: oldRows, _searchString: searchString } = this;
       this._rows = this._rows.map((row) =>
-        searchString && !doesRowMatchSearchString(row, searchString) ? row : { ...row, selected }
+        searchString && !doesRowMatchSearchString(row, searchString)
+          ? row
+          : { ...row, selected }
       );
       this.requestUpdate('_rows', oldRows);
     }
   }
 
   /**
-   * Handles an event to sort rows, fired from `<bx-table-header-cell>`.
+   * Handles an event to sort rows, fired from `<cds-table-header-cell>`.
    * @param {CustomEvent} event The event.
    */
   _handleChangeSort({ defaultPrevented, detail, target }) {
@@ -181,7 +193,7 @@ class BXCEDemoDataTable extends LitElement {
   }
 
   /**
-   * Handles `bx-pagination-changed-current` event on the pagination UI.
+   * Handles `cds-pagination-changed-current` event on the pagination UI.
    * @param {CustomEvent} event The event.
    */
   _handleChangeStart({ detail }) {
@@ -189,7 +201,7 @@ class BXCEDemoDataTable extends LitElement {
   }
 
   /**
-   * Handles `bx-pages-select-changed` event on the pagination UI.
+   * Handles `cds-pages-select-changed` event on the pagination UI.
    * @param {CustomEvent} event The event.
    */
   _handleChangePageSize({ detail }) {
@@ -201,7 +213,9 @@ class BXCEDemoDataTable extends LitElement {
    */
   _handleDeleteRows() {
     const { _rows: oldRows, _searchString: searchString } = this;
-    this._rows = oldRows.filter((row) => !row.selected || !doesRowMatchSearchString(row, searchString));
+    this._rows = oldRows.filter(
+      (row) => !row.selected || !doesRowMatchSearchString(row, searchString)
+    );
     this.requestUpdate('_rows', oldRows);
   }
 
@@ -210,7 +224,10 @@ class BXCEDemoDataTable extends LitElement {
    * @param {CustomEvent} event The event.
    */
   _handleDownloadRows({ target }) {
-    const blob = new Blob([JSON.stringify(this._filteredRows.filter((row) => row.selected))], { type: 'application/json' });
+    const blob = new Blob(
+      [JSON.stringify(this._filteredRows.filter((row) => row.selected))],
+      { type: 'application/json' }
+    );
     target.href = URL.createObjectURL(blob);
     this._handleCancelSelection();
   }
@@ -230,20 +247,19 @@ class BXCEDemoDataTable extends LitElement {
       return undefined;
     }
     return html`
-      <bx-pagination
+      <cds-pagination
         page-size="${pageSize}"
         start="${start}"
         total="${filteredRows.length}"
-        @bx-pagination-changed-current="${handleChangeStart}"
-        @bx-page-sizes-select-changed="${handleChangePageSize}"
-      >
-        <bx-page-sizes-select slot="page-sizes-select">
+        @cds-pagination-changed-current="${handleChangeStart}"
+        @cds-page-sizes-select-changed="${handleChangePageSize}">
+        <cds-page-sizes-select slot="page-sizes-select">
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="15">15</option>
-        </bx-page-sizes-select>
-        <bx-pages-select></bx-pages-select>
-      </bx-pagination>
+        </cds-page-sizes-select>
+        <cds-pages-select></cds-pages-select>
+      </cds-pagination>
     `;
   }
 
@@ -306,7 +322,10 @@ class BXCEDemoDataTable extends LitElement {
     if (this._handleChangeSearchString) {
       this._handleChangeSearchString.cancel();
     }
-    this._handleChangeSearchString = debounce(this._handleChangeSearchStringImpl, 500);
+    this._handleChangeSearchString = debounce(
+      this._handleChangeSearchStringImpl,
+      500
+    );
   }
 
   disconnectedCallback() {
@@ -324,12 +343,26 @@ class BXCEDemoDataTable extends LitElement {
     if (changedProperties.has('rows')) {
       this._rows = this.rows;
     }
-    if (changedProperties.has('rows') || changedProperties.has('_rows') || changedProperties.has('_searchString')) {
-      const { pageSize, start, _rows: rows, _searchString: searchString } = this;
-      this._filteredRows = !searchString ? rows : rows.filter((row) => doesRowMatchSearchString(row, searchString));
+    if (
+      changedProperties.has('rows') ||
+      changedProperties.has('_rows') ||
+      changedProperties.has('_searchString')
+    ) {
+      const {
+        pageSize,
+        start,
+        _rows: rows,
+        _searchString: searchString,
+      } = this;
+      this._filteredRows = !searchString
+        ? rows
+        : rows.filter((row) => doesRowMatchSearchString(row, searchString));
       const count = this._filteredRows.length;
       if (count > 0 && start >= count) {
-        this.start = Math.max(start - Math.ceil((start - count) / pageSize) * pageSize, 0);
+        this.start = Math.max(
+          start - Math.ceil((start - count) / pageSize) * pageSize,
+          0
+        );
       }
     }
     return true;
@@ -349,9 +382,17 @@ class BXCEDemoDataTable extends LitElement {
       _handleDeleteRows: handleDeleteRows,
       _handleDownloadRows: handleDownloadRows,
     } = this;
-    const selectionAllName = !hasSelection ? undefined : `__bx-ce-demo-data-table_select-all_${elementId || this._uniqueId}`;
-    const selectedRowsCountInFiltered = filteredRows.filter(({ selected }) => selected).length;
-    const selectedAllInFiltered = selectedRowsCountInFiltered > 0 && filteredRows.length === selectedRowsCountInFiltered;
+    const selectionAllName = !hasSelection
+      ? undefined
+      : `__${prefix}-ce-demo-data-table_select-all_${
+          elementId || this._uniqueId
+        }`;
+    const selectedRowsCountInFiltered = filteredRows.filter(
+      ({ selected }) => selected
+    ).length;
+    const selectedAllInFiltered =
+      selectedRowsCountInFiltered > 0 &&
+      filteredRows.length === selectedRowsCountInFiltered;
     const hasBatchActions = hasSelection && selectedRowsCountInFiltered > 0;
     const { columnId: sortColumnId, direction: sortDirection } = this._sortInfo;
     const sortedRows =
@@ -360,90 +401,102 @@ class BXCEDemoDataTable extends LitElement {
         : filteredRows
             .slice()
             .sort(
-              (lhs, rhs) => this.constructor.collationFactors[sortDirection] * this._compare(lhs[sortColumnId], rhs[sortColumnId])
+              (lhs, rhs) =>
+                this.constructor.collationFactors[sortDirection] *
+                this._compare(lhs[sortColumnId], rhs[sortColumnId])
             );
     return html`
-      <bx-table-toolbar>
-        <bx-table-batch-actions
+      <cds-table-toolbar>
+        <cds-table-batch-actions
           ?active="${hasBatchActions}"
           selected-rows-count="${selectedRowsCountInFiltered}"
-          @bx-table-batch-actions-cancel-clicked="${handleCancelSelection}"
-        >
-          <bx-btn @click="${handleDeleteRows}">Delete ${Delete16({ slot: 'icon' })}</bx-btn>
-          <bx-btn @click="${handleDownloadRows}" href="javascript:void 0" download="table-data.json">
+          @cds-table-batch-actions-cancel-clicked="${handleCancelSelection}">
+          <cds-btn @click="${handleDeleteRows}"
+            >Delete ${Delete16({ slot: 'icon' })}</cds-btn
+          >
+          <cds-btn
+            @click="${handleDownloadRows}"
+            href="javascript:void 0"
+            download="table-data.json">
             Download ${Download16({ slot: 'icon' })}
-          </bx-btn>
-        </bx-table-batch-actions>
-        <bx-table-toolbar-content ?has-batch-actions="${hasBatchActions}">
-          <bx-table-toolbar-search @bx-search-input="${this._handleChangeSearchString}"></bx-table-toolbar-search>
-          <bx-overflow-menu>
+          </cds-btn>
+        </cds-table-batch-actions>
+        <cds-table-toolbar-content ?has-batch-actions="${hasBatchActions}">
+          <cds-table-toolbar-search
+            @cds-search-input="${this
+              ._handleChangeSearchString}"></cds-table-toolbar-search>
+          <cds-overflow-menu>
             ${Settings16({ slot: 'icon' })}
-            <bx-overflow-menu-body>
-              <bx-overflow-menu-item> Action 1 </bx-overflow-menu-item>
-              <bx-overflow-menu-item> Action 2 </bx-overflow-menu-item>
-              <bx-overflow-menu-item> Action 3 </bx-overflow-menu-item>
-            </bx-overflow-menu-body>
-          </bx-overflow-menu>
-          <bx-btn>Primary Button</bx-btn>
-        </bx-table-toolbar-content>
-      </bx-table-toolbar>
-      <bx-table
+            <cds-overflow-menu-body>
+              <cds-overflow-menu-item> Action 1 </cds-overflow-menu-item>
+              <cds-overflow-menu-item> Action 2 </cds-overflow-menu-item>
+              <cds-overflow-menu-item> Action 3 </cds-overflow-menu-item>
+            </cds-overflow-menu-body>
+          </cds-overflow-menu>
+          <cds-btn>Primary Button</cds-btn>
+        </cds-table-toolbar-content>
+      </cds-table-toolbar>
+      <cds-table
         size="${size}"
-        @bx-table-row-change-selection=${this._handleChangeSelection}
-        @bx-table-change-selection-all=${this._handleChangeSelectionAll}
-        @bx-table-header-cell-sort=${this._handleChangeSort}
-      >
-        <bx-table-head>
-          <bx-table-header-row
+        @cds-table-row-change-selection=${this._handleChangeSelection}
+        @cds-table-change-selection-all=${this._handleChangeSelectionAll}
+        @cds-table-header-cell-sort=${this._handleChangeSort}>
+        <cds-table-head>
+          <cds-table-header-row
             ?selected=${selectedAllInFiltered}
             selection-name=${ifNonNull(selectionAllName)}
-            selection-value=${ifNonNull(selectionAllName)}
-          >
+            selection-value=${ifNonNull(selectionAllName)}>
             ${repeat(
               columns,
               ({ id: columnId }) => columnId,
               ({ id: columnId, sortCycle, title }) => {
                 const sortDirectionForThisCell =
-                  sortCycle && (columnId === sortColumnId ? sortDirection : TABLE_SORT_DIRECTION.NONE);
+                  sortCycle &&
+                  (columnId === sortColumnId
+                    ? sortDirection
+                    : TABLE_SORT_DIRECTION.NONE);
                 return html`
-                  <bx-table-header-cell
+                  <cds-table-header-cell
                     sort-cycle="${ifNonNull(sortCycle)}"
                     sort-direction="${ifNonNull(sortDirectionForThisCell)}"
-                    data-column-id="${columnId}"
-                  >
+                    data-column-id="${columnId}">
                     ${title}
-                  </bx-table-header-cell>
+                  </cds-table-header-cell>
                 `;
               }
             )}
-          </bx-table-header-row>
-        </bx-table-head>
-        <bx-table-body color-scheme="${colorScheme}">
+          </cds-table-header-row>
+        </cds-table-head>
+        <cds-table-body color-scheme="${colorScheme}">
           ${repeat(
             sortedRows.slice(start, start + pageSize),
             ({ id: rowId }) => rowId,
             (row) => {
               const { id: rowId, selected } = row;
-              const selectionName = !hasSelection ? undefined : `__bx-ce-demo-data-table_${elementId || this._uniqueId}_${rowId}`;
+              const selectionName = !hasSelection
+                ? undefined
+                : `__${prefix}-ce-demo-data-table_${
+                    elementId || this._uniqueId
+                  }_${rowId}`;
               const selectionValue = !hasSelection ? undefined : 'selected';
               return html`
-                <bx-table-row
+                <cds-table-row
                   ?selected=${hasSelection && selected}
                   selection-name="${ifNonNull(selectionName)}"
                   selection-value="${ifNonNull(selectionValue)}"
-                  data-row-id="${rowId}"
-                >
+                  data-row-id="${rowId}">
                   ${repeat(
                     columns,
                     ({ id: columnId }) => columnId,
-                    ({ id: columnId }) => html` <bx-table-cell>${row[columnId]}</bx-table-cell> `
+                    ({ id: columnId }) =>
+                      html` <cds-table-cell>${row[columnId]}</cds-table-cell> `
                   )}
-                </bx-table-row>
+                </cds-table-row>
               `;
             }
           )}
-        </bx-table-body>
-      </bx-table>
+        </cds-table-body>
+      </cds-table>
       ${this._renderPagination()}
     `;
   }

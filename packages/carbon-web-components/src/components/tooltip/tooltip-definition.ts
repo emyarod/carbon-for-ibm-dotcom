@@ -10,19 +10,17 @@
 import { classMap } from 'lit/directives/class-map.js';
 import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import settings from 'carbon-components/es/globals/js/settings';
+import { prefix } from '../../globals/settings';
 import FocusMixin from '../../globals/mixins/focus';
 import { TOOLTIP_ALIGNMENT, TOOLTIP_DIRECTION } from './defs';
 import styles from './tooltip.scss';
 
 export { TOOLTIP_ALIGNMENT, TOOLTIP_DIRECTION };
 
-const { prefix } = settings;
-
 /**
  * Definition tooltip.
  *
- * @element bx-tooltip-definition
+ * @element cds-tooltip-definition
  * @slot body - The tooltip body content.
  */
 @customElement(`${prefix}-tooltip-definition`)

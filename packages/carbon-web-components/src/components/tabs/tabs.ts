@@ -11,7 +11,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { html } from 'lit';
 import { property, customElement, query } from 'lit/decorators.js';
 import ChevronDown16 from '@carbon/icons/lib/chevron--down/16';
-import settings from 'carbon-components/es/globals/js/settings';
+import { prefix } from '../../globals/settings';
 import HostListenerMixin from '../../globals/mixins/host-listener';
 import HostListener from '../../globals/decorators/host-listener';
 import { find, forEach } from '../../globals/internal/collection-helpers';
@@ -27,8 +27,6 @@ import {
 import BXTab from './tab';
 import styles from './tabs.scss';
 
-const { prefix } = settings;
-
 export {
   NAVIGATION_DIRECTION,
   NAVIGATION_DIRECTION_NARROW,
@@ -40,11 +38,11 @@ export {
 /**
  * Tabs.
  *
- * @element bx-tabs
- * @fires bx-tabs-beingselected
+ * @element cds-tabs
+ * @fires cds-tabs-beingselected
  *   The custom event fired before a tab is selected upon a user gesture.
  *   Cancellation of this event stops changing the user-initiated selection.
- * @fires bx-tabs-selected - The custom event fired after a a tab is selected upon a user gesture.
+ * @fires cds-tabs-selected - The custom event fired after a a tab is selected upon a user gesture.
  */
 @customElement(`${prefix}-tabs`)
 class BXTabs extends HostListenerMixin(BXContentSwitcher) {

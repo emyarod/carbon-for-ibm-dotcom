@@ -10,10 +10,8 @@
 import { classMap } from 'lit/directives/class-map.js';
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import settings from 'carbon-components/es/globals/js/settings';
+import { prefix } from '../../globals/settings';
 import BXUnorderedList from './unordered-list';
-
-const { prefix } = settings;
 
 /**
  * Ordered list.

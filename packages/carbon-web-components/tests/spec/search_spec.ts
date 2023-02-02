@@ -9,6 +9,7 @@
 
 import { render } from 'lit';
 import EventManager from '../utils/event-manager';
+import { prefix } from '../../src/globals/settings';
 import { INPUT_SIZE } from '../../src/components/input/input';
 import BXSearch, {
   SEARCH_COLOR_SCHEME,
@@ -17,17 +18,19 @@ import { Default } from '../../src/components/search/search-story';
 
 const template = (props?) =>
   Default({
-    'bx-search': props,
+    [`${prefix}-search`]: props,
   });
 
-describe('bx-search', function () {
+describe(`${prefix}-search`, function () {
   const events = new EventManager();
 
   describe('Misc attributes', function () {
     it('should render with minimum attributes', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      expect(document.body.querySelector('bx-search' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-search` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });
@@ -48,7 +51,9 @@ describe('bx-search', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-search' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-search` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });
@@ -58,19 +63,19 @@ describe('bx-search', function () {
     it('should reflect the value', async function () {
       render(template({ value: 'value-foo' }), document.body);
       await Promise.resolve();
-      const search = document.body.querySelector('bx-search');
+      const search = document.body.querySelector(`${prefix}-search`);
       const inputNode = search!.shadowRoot!.querySelector('input');
       inputNode!.value = 'value-bar';
       inputNode!.dispatchEvent(new CustomEvent('input', { bubbles: true }));
       expect((search as BXSearch).value).toBe('value-bar');
     });
 
-    it('Should fire bx-search-input event upon typing', async function () {
+    it('Should fire cds-search-input event upon typing', async function () {
       render(template({ value: 'value-foo' }), document.body);
       await Promise.resolve();
-      const search = document.body.querySelector('bx-search');
+      const search = document.body.querySelector(`${prefix}-search`);
       const spyBeforeClear = jasmine.createSpy('before clear');
-      events.on(search!, 'bx-search-input', spyBeforeClear);
+      events.on(search!, `${prefix}-search-input`, spyBeforeClear);
       const inputNode = search!.shadowRoot!.querySelector('input');
       inputNode!.value = 'value-bar';
       inputNode!.dispatchEvent(new CustomEvent('input', { bubbles: true }));
@@ -84,17 +89,17 @@ describe('bx-search', function () {
     it('should clear the value', async function () {
       render(template({ value: 'value-foo' }), document.body);
       await Promise.resolve();
-      const search = document.body.querySelector('bx-search');
+      const search = document.body.querySelector(`${prefix}-search`);
       search!.shadowRoot!.querySelector('button')!.click();
       expect((search as BXSearch).value).toBe('');
     });
 
-    it('Should fire bx-search-input event upon clearing', async function () {
+    it('Should fire cds-search-input event upon clearing', async function () {
       render(template({ value: 'value-foo' }), document.body);
       await Promise.resolve();
-      const search = document.body.querySelector('bx-search');
+      const search = document.body.querySelector(`${prefix}-search`);
       const spyBeforeClear = jasmine.createSpy('before clear');
-      events.on(search!, 'bx-search-input', spyBeforeClear);
+      events.on(search!, `${prefix}-search-input`, spyBeforeClear);
       search!.shadowRoot!.querySelector('button')!.click();
       await Promise.resolve();
       expect(spyBeforeClear).toHaveBeenCalled();

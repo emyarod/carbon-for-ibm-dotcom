@@ -8,20 +8,23 @@
  */
 
 import { render } from 'lit';
+import { prefix } from '../../src/globals/settings';
 import '../../src/components/link/link';
 import { Default } from '../../src/components/link/link-story';
 
 const template = (props?) =>
   Default({
-    'bx-link': props,
+    [`${prefix}-link`]: props,
   });
 
-describe('bx-link', function () {
+describe(`${prefix}-link`, function () {
   describe('Misc attributes', function () {
     it('should render with minimum attributes', async function () {
       render(template({ href: 'about:blank' }), document.body);
       await Promise.resolve();
-      expect(document.body.querySelector('bx-link' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-link` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });
@@ -41,7 +44,9 @@ describe('bx-link', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-link' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-link` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });
@@ -62,7 +67,9 @@ describe('bx-link', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-link' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-link` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });

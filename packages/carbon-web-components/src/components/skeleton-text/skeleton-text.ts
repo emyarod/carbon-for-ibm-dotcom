@@ -10,18 +10,16 @@
 import { classMap } from 'lit/directives/class-map.js';
 import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import settings from 'carbon-components/es/globals/js/settings';
+import { prefix } from '../../globals/settings';
 import { SKELETON_TEXT_TYPE } from './defs';
 import styles from './skeleton-text.scss';
 
 export { SKELETON_TEXT_TYPE };
 
-const { prefix } = settings;
-
 /**
  * Skeleton text.
  *
- * @element bx-skeleton-text
+ * @element cds-skeleton-text
  */
 @customElement(`${prefix}-skeleton-text`)
 class BXSkeletonText extends LitElement {

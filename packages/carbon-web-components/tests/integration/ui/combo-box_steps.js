@@ -7,7 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-describe('bx-combo-box', () => {
+const { prefix } = require('../../../src/globals/settings');
+
+describe(`${prefix}-combo-box`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-combo-box--default`
@@ -15,13 +17,19 @@ describe('bx-combo-box', () => {
   });
 
   it('should have combo box interactive', async () => {
-    await page.click('bx-combo-box .bx--list-box__field');
-    await expect(page).toHaveSelector('bx-combo-box .bx--list-box__menu', {
-      state: 'visible',
-    });
-    await page.click('bx-combo-box .bx--list-box__field');
-    await expect(page).toHaveSelector('bx-combo-box .bx--list-box__menu', {
-      state: 'hidden',
-    });
+    await page.click('${prefix}-combo-box .${prefix}--list-box__field');
+    await expect(page).toHaveSelector(
+      '${prefix}-combo-box .${prefix}--list-box__menu',
+      {
+        state: 'visible',
+      }
+    );
+    await page.click('${prefix}-combo-box .${prefix}--list-box__field');
+    await expect(page).toHaveSelector(
+      '${prefix}-combo-box .${prefix}--list-box__menu',
+      {
+        state: 'hidden',
+      }
+    );
   });
 });

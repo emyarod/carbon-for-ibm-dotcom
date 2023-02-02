@@ -7,17 +7,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import settings from 'carbon-components/es/globals/js/settings';
-import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { prefix } from '../../globals/settings';
+import { html, customElement, LitElement } from 'lit-element';
 import styles from './data-table.scss';
-
-const { prefix } = settings;
 
 /**
  * Data table cell.
  *
- * @element bx-table-cell
+ * @element cds-table-cell
  */
 @customElement(`${prefix}-table-cell`)
 class BXTableCell extends LitElement {
@@ -29,7 +26,7 @@ class BXTableCell extends LitElement {
   }
 
   render() {
-    return html` <slot></slot> `;
+    return html`<slot></slot>`;
   }
 
   static styles = styles;

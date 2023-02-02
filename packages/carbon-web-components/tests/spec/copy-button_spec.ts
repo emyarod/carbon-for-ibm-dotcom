@@ -8,20 +8,21 @@
  */
 
 import { render } from 'lit';
+import { prefix } from '../../src/globals/settings';
 import { Default } from '../../src/components/copy-button/copy-button-story';
 
 const template = (props?) =>
   Default({
-    'bx-copy-button': props,
+    [`${prefix}-copy-button`]: props,
   });
 
-describe('bx-copy-button', function () {
+describe(`${prefix}-copy-button`, function () {
   describe('Rendering', function () {
     it('Should render with minimum attributes', async function () {
       render(template(), document.body);
       await Promise.resolve();
       expect(
-        document.body.querySelector('bx-copy-button' as any)
+        document.body.querySelector(`${prefix}-copy-button` as any)
       ).toMatchSnapshot({
         mode: 'shadow',
       });
@@ -38,7 +39,7 @@ describe('bx-copy-button', function () {
       );
       await Promise.resolve();
       expect(
-        document.body.querySelector('bx-copy-button' as any)
+        document.body.querySelector(`${prefix}-copy-button` as any)
       ).toMatchSnapshot({
         mode: 'shadow',
       });
@@ -57,18 +58,22 @@ describe('bx-copy-button', function () {
       render(template(), document.body);
       await Promise.resolve();
       const button = document.body
-        .querySelector('bx-copy-button')!
+        .querySelector(`${prefix}-copy-button`)!
         .shadowRoot!.querySelector('button');
       button!.click();
       await Promise.resolve();
-      const feedback = button!.querySelector('.bx--btn--copy__feedback');
+      const feedback = button!.querySelector(`.${prefix}--btn--copy__feedback`);
       expect(
-        feedback!.classList.contains('bx--btn--copy__feedback--displayed')
+        feedback!.classList.contains(
+          `${prefix}--btn--copy__feedback--displayed`
+        )
       ).toBe(true);
       jasmine.clock().tick(2000);
       await Promise.resolve();
       expect(
-        feedback!.classList.contains('bx--btn--copy__feedback--displayed')
+        feedback!.classList.contains(
+          `${prefix}--btn--copy__feedback--displayed`
+        )
       ).toBe(false);
     });
 
@@ -76,18 +81,22 @@ describe('bx-copy-button', function () {
       render(template({ feedbackTimeout: 500 }), document.body);
       await Promise.resolve();
       const button = document.body
-        .querySelector('bx-copy-button')!
+        .querySelector(`${prefix}-copy-button`)!
         .shadowRoot!.querySelector('button');
       button!.click();
       await Promise.resolve();
-      const feedback = button!.querySelector('.bx--btn--copy__feedback');
+      const feedback = button!.querySelector(`.${prefix}--btn--copy__feedback`);
       expect(
-        feedback!.classList.contains('bx--btn--copy__feedback--displayed')
+        feedback!.classList.contains(
+          `${prefix}--btn--copy__feedback--displayed`
+        )
       ).toBe(true);
       jasmine.clock().tick(500);
       await Promise.resolve();
       expect(
-        feedback!.classList.contains('bx--btn--copy__feedback--displayed')
+        feedback!.classList.contains(
+          `${prefix}--btn--copy__feedback--displayed`
+        )
       ).toBe(false);
     });
 

@@ -9,15 +9,13 @@
 
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import settings from 'carbon-components/es/globals/js/settings';
+import { prefix } from '../../globals/settings';
 import styles from './data-table.scss';
-
-const { prefix } = settings;
 
 /**
  * Table toolbar.
  *
- * @element bx-table-toolbar
+ * @element cds-table-toolbar
  */
 @customElement(`${prefix}-table-toolbar`)
 class BXTableToolbar extends LitElement {
@@ -29,7 +27,7 @@ class BXTableToolbar extends LitElement {
   }
 
   render() {
-    return html` <slot></slot> `;
+    return html`<slot></slot>`;
   }
 
   static styles = styles;

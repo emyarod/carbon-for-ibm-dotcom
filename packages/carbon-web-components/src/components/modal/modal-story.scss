@@ -5,9 +5,11 @@
 // LICENSE file in the root directory of this source tree.
 //
 
+@use '@carbon/styles/scss/config' as *;
+
 /* stylelint-disable selector-type-no-unknown */
-bx-modal[open] {
-  // `@extend` usage in the corresponding rule in `modal.scss` causes the ruleset defined after `:host(bx-modal)`,
+#{$prefix}-modal[open] {
+  // `@extend` usage in the corresponding rule in `modal.scss` causes the ruleset defined after `:host(cds-modal)`,
   // which itself is OK, but it causes an adverse effect in Playwright WebKit environment
   // TODO: Upgrade Playwright soon
   opacity: 1;

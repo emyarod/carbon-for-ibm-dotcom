@@ -9,50 +9,59 @@
 
 import { render } from 'lit';
 import EventManager from '../utils/event-manager';
+import { prefix } from '../../src/globals/settings';
 import BXTabs from '../../src/components/tabs/tabs';
 import BXTab from '../../src/components/tabs/tab';
 import { Default } from '../../src/components/tabs/tabs-story';
 
 const template = (props?) =>
   Default({
-    'bx-tabs': props,
+    [`${prefix}-tabs`]: props,
   });
 
-describe('bx-tabs', function () {
+describe(`${prefix}-tabs`, function () {
   describe('Toggling', function () {
     it('should toggle "open" attribute', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       const inner = elem!.shadowRoot!.getElementById('trigger');
       (inner as HTMLElement).click();
       await Promise.resolve();
-      expect(inner!.classList.contains('bx--tabs-trigger--open')).toBe(true);
+      expect(inner!.classList.contains(`${prefix}--tabs-trigger--open`)).toBe(
+        true
+      );
       (inner as HTMLElement).click();
       await Promise.resolve();
-      expect(inner!.classList.contains('bx--tabs-trigger--open')).toBe(false);
+      expect(inner!.classList.contains(`${prefix}--tabs-trigger--open`)).toBe(
+        false
+      );
     });
 
     it('should always close dropdown when clicking document', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       const inner = elem!.shadowRoot!.getElementById('trigger');
       (inner as HTMLElement).click();
       await Promise.resolve();
       document.documentElement.click();
-      expect(elem!.classList.contains('bx--tabs-trigger--open')).toBe(false);
+      expect(elem!.classList.contains(`${prefix}--tabs-trigger--open`)).toBe(
+        false
+      );
     });
 
     it('should close dropdown when clicking on an item', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       const inner = elem!.shadowRoot!.getElementById('trigger');
       (inner as HTMLElement).click();
       await Promise.resolve();
-      (document.body.querySelector('bx-tab') as HTMLElement).click();
-      expect(elem!.classList.contains('bx--tabs-trigger--open')).toBe(false);
+      (document.body.querySelector(`${prefix}-tab`) as HTMLElement).click();
+      expect(elem!.classList.contains(`${prefix}--tabs-trigger--open`)).toBe(
+        false
+      );
     });
   });
 
@@ -62,7 +71,7 @@ describe('bx-tabs', function () {
     it('should add/remove "selected" attribute', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       (itemNodes[2] as HTMLElement).click();
       await Promise.resolve();
       expect(itemNodes[0].hasAttribute('selected')).toBe(false);
@@ -75,8 +84,8 @@ describe('bx-tabs', function () {
     it('should update text', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       (itemNodes[2] as HTMLElement).click();
       await Promise.resolve();
       expect(
@@ -87,21 +96,22 @@ describe('bx-tabs', function () {
     it('should update value', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       (itemNodes[2] as HTMLElement).click();
       await Promise.resolve();
-      expect((document.body.querySelector('bx-tabs') as BXTabs).value).toBe(
-        'staging'
-      );
+      expect(
+        (document.body.querySelector(`${prefix}-tabs`) as BXTabs).value
+      ).toBe('staging');
     });
 
     it('should provide a way to switch item with a value', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      (document.body.querySelector('bx-tabs') as BXTabs).value = 'staging';
-      await Promise.resolve(); // Update cycle for `<bx-tabs>`
-      await Promise.resolve(); // Update cycle for `<bx-tab>`
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      (document.body.querySelector(`${prefix}-tabs`) as BXTabs).value =
+        'staging';
+      await Promise.resolve(); // Update cycle for `<cds-tabs>`
+      await Promise.resolve(); // Update cycle for `<cds-tab>`
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       expect(itemNodes[0].hasAttribute('selected')).toBe(false);
       expect(itemNodes[1].hasAttribute('selected')).toBe(false);
       expect(itemNodes[2].hasAttribute('selected')).toBe(true);
@@ -112,11 +122,11 @@ describe('bx-tabs', function () {
     it('should provide a way to cancel switching item', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
-      const itemNodes = document.body.querySelectorAll('bx-tab');
-      (document.body.querySelector('bx-tabs') as BXTabs).value = 'all';
+      const elem = document.body.querySelector(`${prefix}-tabs`);
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
+      (document.body.querySelector(`${prefix}-tabs`) as BXTabs).value = 'all';
       await Promise.resolve();
-      events.on(elem!, 'bx-tabs-beingselected', (event: CustomEvent) => {
+      events.on(elem!, `${prefix}-tabs-beingselected`, (event: CustomEvent) => {
         expect(event.detail.item).toBe(itemNodes[2]);
         event.preventDefault();
       });
@@ -141,7 +151,7 @@ describe('bx-tabs', function () {
     it('should support closing narrow mode dropdown by ESC key', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as any)._open = true;
       elem!.dispatchEvent(
         Object.assign(new CustomEvent('keydown', { bubbles: true }), {
@@ -154,10 +164,10 @@ describe('bx-tabs', function () {
     it('should support left key in non-narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as BXTabs).value = 'all';
-      await Promise.resolve(); // Update cycle for `<bx-tabs>`
-      await Promise.resolve(); // Update cycle for `<bx-tab>`
+      await Promise.resolve(); // Update cycle for `<cds-tabs>`
+      await Promise.resolve(); // Update cycle for `<cds-tab>`
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
       spyOnProperty(triggerNode!, 'offsetParent').and.returnValue(null);
       elem!.dispatchEvent(
@@ -166,7 +176,7 @@ describe('bx-tabs', function () {
         })
       );
       await Promise.resolve();
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       expect(itemNodes[0].hasAttribute('selected')).toBe(false);
       expect(itemNodes[1].hasAttribute('selected')).toBe(false);
       expect(itemNodes[2].hasAttribute('selected')).toBe(false);
@@ -177,10 +187,10 @@ describe('bx-tabs', function () {
     it('should support right key in non-narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as BXTabs).value = 'router';
-      await Promise.resolve(); // Update cycle for `<bx-tabs>`
-      await Promise.resolve(); // Update cycle for `<bx-tab>`
+      await Promise.resolve(); // Update cycle for `<cds-tabs>`
+      await Promise.resolve(); // Update cycle for `<cds-tab>`
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
       spyOnProperty(triggerNode!, 'offsetParent').and.returnValue(null);
       elem!.dispatchEvent(
@@ -189,7 +199,7 @@ describe('bx-tabs', function () {
         })
       );
       await Promise.resolve();
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       expect(itemNodes[0].hasAttribute('selected')).toBe(true);
       expect(itemNodes[1].hasAttribute('selected')).toBe(false);
       expect(itemNodes[2].hasAttribute('selected')).toBe(false);
@@ -200,11 +210,11 @@ describe('bx-tabs', function () {
     it('should support up key in narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as BXTabs).value = 'all';
       (elem as any)._open = true;
-      await Promise.resolve(); // Update cycle for `<bx-tabs>`
-      await Promise.resolve(); // Update cycle for `<bx-tab>`
+      await Promise.resolve(); // Update cycle for `<cds-tabs>`
+      await Promise.resolve(); // Update cycle for `<cds-tab>`
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
       spyOnProperty(triggerNode!, 'offsetParent').and.returnValue({});
       elem!.dispatchEvent(
@@ -213,7 +223,7 @@ describe('bx-tabs', function () {
         })
       );
       await Promise.resolve();
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       expect(itemNodes[0].hasAttribute('highlighted')).toBe(false);
       expect(itemNodes[1].hasAttribute('highlighted')).toBe(false);
       expect(itemNodes[2].hasAttribute('highlighted')).toBe(false);
@@ -224,11 +234,11 @@ describe('bx-tabs', function () {
     it('should support down key in narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as BXTabs).value = 'router';
       (elem as any)._open = true;
-      await Promise.resolve(); // Update cycle for `<bx-tabs>`
-      await Promise.resolve(); // Update cycle for `<bx-tab>`
+      await Promise.resolve(); // Update cycle for `<cds-tabs>`
+      await Promise.resolve(); // Update cycle for `<cds-tab>`
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
       spyOnProperty(triggerNode!, 'offsetParent').and.returnValue({});
       elem!.dispatchEvent(
@@ -237,7 +247,7 @@ describe('bx-tabs', function () {
         })
       );
       await Promise.resolve();
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       expect(itemNodes[0].hasAttribute('highlighted')).toBe(true);
       expect(itemNodes[1].hasAttribute('highlighted')).toBe(false);
       expect(itemNodes[2].hasAttribute('highlighted')).toBe(false);
@@ -248,10 +258,10 @@ describe('bx-tabs', function () {
     it('should open the dropdown with down key in narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as BXTabs).value = 'all';
-      await Promise.resolve(); // Update cycle for `<bx-tabs>`
-      await Promise.resolve(); // Update cycle for `<bx-tab>`
+      await Promise.resolve(); // Update cycle for `<cds-tabs>`
+      await Promise.resolve(); // Update cycle for `<cds-tab>`
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
       spyOnProperty(triggerNode!, 'offsetParent').and.returnValue({});
       elem!.dispatchEvent(
@@ -261,7 +271,7 @@ describe('bx-tabs', function () {
       );
       await Promise.resolve();
       expect((elem as any)._open).toBe(true);
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       expect(itemNodes[0].hasAttribute('highlighted')).toBe(false);
       expect(itemNodes[1].hasAttribute('highlighted')).toBe(false);
       expect(itemNodes[2].hasAttribute('highlighted')).toBe(false);
@@ -272,10 +282,10 @@ describe('bx-tabs', function () {
     it('should open the dropdown with up key in narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as BXTabs).value = 'all';
-      await Promise.resolve(); // Update cycle for `<bx-tabs>`
-      await Promise.resolve(); // Update cycle for `<bx-tab>`
+      await Promise.resolve(); // Update cycle for `<cds-tabs>`
+      await Promise.resolve(); // Update cycle for `<cds-tab>`
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
       spyOnProperty(triggerNode!, 'offsetParent').and.returnValue({});
       elem!.dispatchEvent(
@@ -285,7 +295,7 @@ describe('bx-tabs', function () {
       );
       await Promise.resolve();
       expect((elem as any)._open).toBe(true);
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       expect(itemNodes[0].hasAttribute('highlighted')).toBe(false);
       expect(itemNodes[1].hasAttribute('highlighted')).toBe(false);
       expect(itemNodes[2].hasAttribute('highlighted')).toBe(false);
@@ -296,7 +306,7 @@ describe('bx-tabs', function () {
     it('should open the dropdown with space key in narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
       spyOnProperty(triggerNode!, 'offsetParent').and.returnValue({});
       elem!.dispatchEvent(
@@ -310,9 +320,9 @@ describe('bx-tabs', function () {
     it('should select the highlighted item with space key in narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as any)._open = true;
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       (itemNodes[2] as BXTab).highlighted = true;
       await Promise.resolve();
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
@@ -330,13 +340,13 @@ describe('bx-tabs', function () {
     it('should simply close the dropdown if user tries to choose the same selection in narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as BXTabs).value = 'staging';
       (elem as any)._open = true;
-      const itemNodes = document.body.querySelectorAll('bx-tab');
+      const itemNodes = document.body.querySelectorAll(`${prefix}-tab`);
       (itemNodes[2] as BXTab).highlighted = true;
-      await Promise.resolve(); // Update cycle for `<bx-tabs>`
-      await Promise.resolve(); // Update cycle for `<bx-tab>`
+      await Promise.resolve(); // Update cycle for `<cds-tabs>`
+      await Promise.resolve(); // Update cycle for `<cds-tab>`
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
       spyOnProperty(triggerNode!, 'offsetParent').and.returnValue({});
       elem!.dispatchEvent(
@@ -350,7 +360,7 @@ describe('bx-tabs', function () {
     it('should support closing the dropdown without an highlighted item in narrow mode', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-tabs');
+      const elem = document.body.querySelector(`${prefix}-tabs`);
       (elem as any)._open = true;
       const triggerNode = elem!.shadowRoot!.getElementById('trigger');
       spyOnProperty(triggerNode!, 'offsetParent').and.returnValue({});

@@ -11,15 +11,13 @@ import { LitElement, html, svg, SVGTemplateResult } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import CheckmarkOutline16 from '@carbon/icons/lib/checkmark--outline/16';
 import Warning16 from '@carbon/icons/lib/warning/16';
-import settings from 'carbon-components/es/globals/js/settings';
+import { prefix } from '../../globals/settings';
 import spread from '../../globals/directives/spread';
 import FocusMixin from '../../globals/mixins/focus';
 import { PROGRESS_STEP_STAT } from './defs';
 import styles from './progress-indicator.scss';
 
 export { PROGRESS_STEP_STAT };
-
-const { prefix } = settings;
 
 /**
  * Icons, keyed by state.
@@ -58,7 +56,7 @@ const icons = {
 /**
  * Progress step.
  *
- * @element bx-progress-step
+ * @element cds-progress-step
  * @slot secondary-label-text - The secondary progress label.
  */
 @customElement(`${prefix}-progress-step`)

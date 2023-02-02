@@ -7,16 +7,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import settings from 'carbon-components/es/globals/js/settings';
 import { customElement } from 'lit/decorators.js';
+import { prefix } from '../../globals/settings';
 import HostListener from '../../globals/decorators/host-listener';
 import HostListenerMixin from '../../globals/mixins/host-listener';
 import RadioGroupManager, {
   NAVIGATION_DIRECTION,
 } from '../../globals/internal/radio-group-manager';
 import SelectableTile from './selectable-tile';
-
-const { prefix } = settings;
 
 /**
  * Map of navigation direction by key.
@@ -31,7 +29,7 @@ const navigationDirectionForKey = {
 /**
  * Single-selectable tile.
  *
- * @element bx-radio-tile
+ * @element cds-radio-tile
  */
 @customElement(`${prefix}-radio-tile`)
 class BXRadioTile extends HostListenerMixin(SelectableTile) {

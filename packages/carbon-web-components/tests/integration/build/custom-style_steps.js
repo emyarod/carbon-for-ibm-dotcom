@@ -9,22 +9,32 @@
 
 const path = require('path');
 const fs = require('fs-extra');
-const { setup: setupDevServer, teardown: teardownDevServer } = require('jest-dev-server');
+const {
+  setup: setupDevServer,
+  teardown: teardownDevServer,
+} = require('jest-dev-server');
 const exec = require('../exec');
 const replaceDependencies = require('../replace-dependencies');
+const { prefix } = require('../../../src/globals/settings');
 
 const PORT = 1236;
 
 describe('Custom style example with inherited component class', () => {
   beforeAll(async () => {
     const projectRoot = path.resolve(__dirname, '../../..');
-    const src = path.resolve(projectRoot, 'examples/codesandbox/styling/custom-style');
+    const src = path.resolve(
+      projectRoot,
+      'examples/codesandbox/styling/custom-style'
+    );
     const tmpDir = process.env.CCE_EXAMPLE_TMPDIR;
     await fs.copy(src, `${tmpDir}/custom-style`);
     await replaceDependencies([`${tmpDir}/custom-style/package.json`]);
     await exec('yarn', ['install'], { cwd: `${tmpDir}/custom-style` });
     await setupDevServer({
-      command: `cd ${tmpDir}/custom-style && node ${path.resolve(__dirname, 'webpack-server.js')} --port=${PORT}`,
+      command: `cd ${tmpDir}/custom-style && node ${path.resolve(
+        __dirname,
+        'webpack-server.js'
+      )} --port=${PORT}`,
       launchTimeout: Number(process.env.LAUNCH_TIMEOUT),
       port: PORT,
     });
@@ -37,10 +47,14 @@ describe('Custom style example with inherited component class', () => {
 
   it('should have dropdown with custom color', async () => {
     const backgroundColorValue = await page.evaluate((dropdown) => {
-      const listBox = dropdown.shadowRoot.querySelector('.bx--list-box');
-      return listBox.ownerDocument.defaultView.getComputedStyle(listBox).getPropertyValue('background-color');
+      const listBox = dropdown.shadowRoot.querySelector(`.${prefix}--list-box`);
+      return listBox.ownerDocument.defaultView
+        .getComputedStyle(listBox)
+        .getPropertyValue('background-color');
     }, await expect(page).toMatchElement('my-dropdown'));
-    expect(backgroundColorValue).toEqual(expect.stringMatching(/rgb\(\s*255,\s*255,\s*255\s*\)/));
+    expect(backgroundColorValue).toEqual(
+      expect.stringMatching(/rgb\(\s*255,\s*255,\s*255\s*\)/)
+    );
   });
 
   afterAll(async () => {

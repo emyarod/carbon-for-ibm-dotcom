@@ -8,15 +8,16 @@
  */
 
 import { render } from 'lit';
+import { prefix } from '../../src/globals/settings';
 import BXStructuredListRow from '../../src/components/structured-list/structured-list-row';
 import { Default } from '../../src/components/structured-list/structured-list-story';
 
 const template = (props?) =>
   Default({
-    'bx-structured-list': props,
+    [`${prefix}-structured-list`]: props,
   });
 
-describe('bx-structured-list', function () {
+describe(`${prefix}-structured-list`, function () {
   describe('Selection', function () {
     let list;
     let rows;
@@ -24,8 +25,8 @@ describe('bx-structured-list', function () {
     beforeEach(async function () {
       render(template({ hasSelection: true }), document.body);
       await Promise.resolve();
-      list = document.body.querySelector('bx-structured-list');
-      rows = document.body.querySelectorAll('bx-structured-list-row');
+      list = document.body.querySelector(`${prefix}-structured-list`);
+      rows = document.body.querySelectorAll(`${prefix}-structured-list-row`);
     });
 
     it('should reflect the selection settings', async function () {
@@ -34,7 +35,7 @@ describe('bx-structured-list', function () {
       expect(
         list
           .shadowRoot!.querySelector('section')!
-          .classList.contains('bx--structured-list--selection')
+          .classList.contains(`${prefix}--structured-list--selection`)
       ).toBe(true);
       expect(
         Array.prototype.every.call(

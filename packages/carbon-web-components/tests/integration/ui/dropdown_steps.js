@@ -7,7 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-describe('bx-dropdown', () => {
+const { prefix } = require('../../../src/globals/settings');
+
+describe(`${prefix}-dropdown`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-dropdown--default`
@@ -15,13 +17,19 @@ describe('bx-dropdown', () => {
   });
 
   it('should have dropdown interactive', async () => {
-    await page.click('bx-dropdown .bx--list-box__field');
-    await expect(page).toHaveSelector('bx-dropdown .bx--list-box__menu', {
-      state: 'visible',
-    });
-    await page.click('bx-dropdown .bx--list-box__field');
-    await expect(page).toHaveSelector('bx-dropdown .bx--list-box__menu', {
-      state: 'hidden',
-    });
+    await page.click(`${prefix}-dropdown .${prefix}--list-box__field`);
+    await expect(page).toHaveSelector(
+      `${prefix}-dropdown .${prefix}--list-box__menu`,
+      {
+        state: 'visible',
+      }
+    );
+    await page.click(`${prefix}-dropdown .${prefix}--list-box__field`);
+    await expect(page).toHaveSelector(
+      `${prefix}-dropdown .${prefix}--list-box__menu`,
+      {
+        state: 'hidden',
+      }
+    );
   });
 });

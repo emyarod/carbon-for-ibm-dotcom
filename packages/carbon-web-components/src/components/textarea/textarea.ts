@@ -10,7 +10,7 @@
 import { LitElement, html } from 'lit';
 import { property, customElement, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import settings from 'carbon-components/es/globals/js/settings';
+import { prefix } from '../../globals/settings';
 import WarningFilled16 from '@carbon/icons/lib/warning--filled/16';
 import ifNonEmpty from '../../globals/directives/if-non-empty';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -21,12 +21,10 @@ import styles from './textarea.scss';
 
 export { TEXTAREA_COLOR_SCHEME };
 
-const { prefix } = settings;
-
 /**
  * Text area.
  *
- * @element bx-textarea
+ * @element cds-textarea
  * @slot helper-text - The helper text.
  * @slot label-text - The label text.
  * @slot validity-message - The validity message. If present and non-empty, this input shows the UI of its invalid state.

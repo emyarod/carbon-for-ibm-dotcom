@@ -7,7 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-describe('bx-inline-notification', () => {
+const { prefix } = require('../../../src/globals/settings');
+
+describe(`${prefix}-inline-notification`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-notifications--inline`
@@ -16,15 +18,15 @@ describe('bx-inline-notification', () => {
 
   it('should have notification closable', async () => {
     await page.click(
-      'bx-inline-notification .bx--inline-notification__close-button'
+      `${prefix}-inline-notification .${prefix}--inline-notification__close-button`
     );
-    await expect(page).toHaveSelector('bx-inline-notification', {
+    await expect(page).toHaveSelector(`${prefix}-inline-notification`, {
       state: 'hidden',
     });
   });
 });
 
-describe('bx-toast-notification', () => {
+describe(`${prefix}-toast-notification`, () => {
   beforeAll(async () => {
     await page.goto(
       `http://localhost:${process.env.PORT}/iframe.html?id=components-notifications--toast`
@@ -33,9 +35,9 @@ describe('bx-toast-notification', () => {
 
   it('should have notification closable', async () => {
     await page.click(
-      'bx-toast-notification .bx--toast-notification__close-button'
+      `${prefix}-toast-notification .${prefix}--toast-notification__close-button`
     );
-    await expect(page).toHaveSelector('bx-toast-notification', {
+    await expect(page).toHaveSelector(`${prefix}-toast-notification`, {
       state: 'hidden',
     });
   });

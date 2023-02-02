@@ -18,7 +18,7 @@ class MyDropdown extends BXDropdown {}
 MyDropdown.styles = [
   BXDropdown.styles,
   css`
-    .bx--list-box {
+    .cds--list-box {
       background-color: white;
     }
   `,

@@ -7,9 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import settings from 'carbon-components/es/globals/js/settings';
 import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import { prefix } from '../../globals/settings';
 import OverflowMenuVertical16 from '@carbon/icons/lib/overflow-menu--vertical/16';
 import HostListener from '../../globals/decorators/host-listener';
 import FocusMixin from '../../globals/mixins/focus';
@@ -22,12 +22,10 @@ import styles from './overflow-menu.scss';
 
 export { OVERFLOW_MENU_COLOR_SCHEME, OVERFLOW_MENU_SIZE };
 
-const { prefix } = settings;
-
 /**
  * Overflow menu.
  *
- * @element bx-overflow-menu
+ * @element cds-overflow-menu
  * @slot icon - The icon for the trigger button.
  */
 @customElement(`${prefix}-overflow-menu`)

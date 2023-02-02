@@ -7,9 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import settings from 'carbon-components/es/globals/js/settings';
 import { LitElement, html } from 'lit';
 import { property, customElement, query } from 'lit/decorators.js';
+import { prefix } from '../../globals/settings';
 import Information16 from '@carbon/icons/lib/information/16';
 import HostListener from '../../globals/decorators/host-listener';
 import HostListenerMixin from '../../globals/mixins/host-listener';
@@ -18,12 +18,10 @@ import BXFloatingMenu from '../floating-menu/floating-menu';
 import BXFloatingMenuTrigger from '../floating-menu/floating-menu-trigger';
 import styles from './tooltip.scss';
 
-const { prefix } = settings;
-
 /**
  * Trigger button of tooltip.
  *
- * @element bx-tooltip
+ * @element cds-tooltip
  */
 @customElement(`${prefix}-tooltip`)
 class BXTooltip

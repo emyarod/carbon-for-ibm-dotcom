@@ -9,6 +9,7 @@
 
 import { html, render } from 'lit';
 import EventManager from '../utils/event-manager';
+import { prefix } from '../../src/globals/settings';
 import { INPUT_SIZE } from '../../src/components/input/input';
 import BXSelect, {
   SELECT_COLOR_SCHEME,
@@ -32,17 +33,19 @@ const getValues = (formData: FormData) => {
 
 const template = (props?) =>
   Default({
-    'bx-select': props,
+    [`${prefix}-select`]: props,
   });
 
-describe('bx-select', function () {
+describe(`${prefix}-select`, function () {
   const events = new EventManager();
 
   describe('Misc attributes', function () {
     it('should render with minimum attributes', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      expect(document.body.querySelector('bx-select' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-select` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });
@@ -63,7 +66,9 @@ describe('bx-select', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-select' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-select` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });
@@ -78,7 +83,9 @@ describe('bx-select', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-select' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-select` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });
@@ -88,8 +95,10 @@ describe('bx-select', function () {
     it('should support adding an option', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-select');
-      const item = document.createElement('bx-select-item') as BXSelectItem;
+      const elem = document.body.querySelector(`${prefix}-select`);
+      const item = document.createElement(
+        `${prefix}-select-item`
+      ) as BXSelectItem;
       item.disabled = true;
       item.label = 'label-foo';
       item.selected = true;
@@ -109,12 +118,12 @@ describe('bx-select', function () {
       render(template(), document.body);
       await Promise.resolve();
       const item = document.body.querySelector(
-        'bx-select-item[value="staging"]'
+        `${prefix}-select-item[value="staging"]`
       );
       (item as BXSelectItem).disabled = true;
       await Promise.resolve(); // Let `MutationObserver` run
       await Promise.resolve(); // Update cycle of rendering new child `<option>`s
-      const elem = document.body.querySelector('bx-select');
+      const elem = document.body.querySelector(`${prefix}-select`);
       const option = elem!.shadowRoot!.querySelector(
         'option[value="staging"]'
       ) as HTMLOptionElement;
@@ -125,12 +134,12 @@ describe('bx-select', function () {
       render(template(), document.body);
       await Promise.resolve();
       const item = document.body.querySelector(
-        'bx-select-item[value="staging"]'
+        `${prefix}-select-item[value="staging"]`
       );
       item!.parentNode!.removeChild(item!);
       await Promise.resolve(); // Let `MutationObserver` run
       await Promise.resolve(); // Update cycle of rendering new child `<option>`s
-      const elem = document.body.querySelector('bx-select');
+      const elem = document.body.querySelector(`${prefix}-select`);
       expect(
         elem!.shadowRoot!.querySelector('option[value="staging"]')
       ).toBeNull();
@@ -139,9 +148,9 @@ describe('bx-select', function () {
     it('should support adding an option group', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-select');
+      const elem = document.body.querySelector(`${prefix}-select`);
       const item = document.createElement(
-        'bx-select-item-group'
+        `${prefix}-select-item-group`
       ) as BXSelectItem;
       item.disabled = true;
       item.label = 'label-foo';
@@ -159,12 +168,12 @@ describe('bx-select', function () {
       render(template(), document.body);
       await Promise.resolve();
       const itemGroup = document.body.querySelector(
-        'bx-select-item-group[label="Category 2"]'
+        `${prefix}-select-item-group[label="Category 2"]`
       );
       (itemGroup as BXSelectItemGroup).disabled = true;
       await Promise.resolve(); // Let `MutationObserver` run
       await Promise.resolve(); // Update cycle of rendering new child `<optgroup>`s
-      const elem = document.body.querySelector('bx-select');
+      const elem = document.body.querySelector(`${prefix}-select`);
       const option = elem!.shadowRoot!.querySelector(
         'optgroup[label="Category 2"]'
       ) as HTMLOptGroupElement;
@@ -175,12 +184,12 @@ describe('bx-select', function () {
       render(template(), document.body);
       await Promise.resolve();
       const itemGroup = document.body.querySelector(
-        'bx-select-item-group[label="Category 2"]'
+        `${prefix}-select-item-group[label="Category 2"]`
       );
       itemGroup!.parentNode!.removeChild(itemGroup!);
       await Promise.resolve(); // Let `MutationObserver` run
       await Promise.resolve(); // Update cycle of rendering new child `<optgroup>`s
-      const elem = document.body.querySelector('bx-select');
+      const elem = document.body.querySelector(`${prefix}-select`);
       expect(
         elem!.shadowRoot!.querySelector('optgroup[label="Category 2"]')
       ).toBeNull();
@@ -192,14 +201,16 @@ describe('bx-select', function () {
       render(
         template({
           children: html`
-            <bx-select-item value="all">Option 1</bx-select-item>
-            <bx-select-item value="cloudFoundry">Option 2</bx-select-item>
+            <cds-select-item value="all">Option 1</cds-select-item>
+            <cds-select-item value="cloudFoundry">Option 2</cds-select-item>
           `,
         }),
         document.body
       );
       await Promise.resolve();
-      const { options } = document.body.querySelector('bx-select') as BXSelect;
+      const { options } = document.body.querySelector(
+        `${prefix}-select`
+      ) as BXSelect;
       expect(
         Array.prototype.map.call(options, (option) => option.value)
       ).toEqual(['all', 'cloudFoundry']);
@@ -209,30 +220,30 @@ describe('bx-select', function () {
       render(
         template({
           children: html`
-            <bx-select-item value="all">Option 1</bx-select-item>
-            <bx-select-item value="cloudFoundry">Option 2</bx-select-item>
+            <cds-select-item value="all">Option 1</cds-select-item>
+            <cds-select-item value="cloudFoundry">Option 2</cds-select-item>
           `,
         }),
         document.body
       );
       await Promise.resolve();
       expect(
-        (document.body.querySelector('bx-select') as BXSelect).length
+        (document.body.querySelector(`${prefix}-select`) as BXSelect).length
       ).toBe(2);
     });
 
     it('should support querying the type', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      expect((document.body.querySelector('bx-select') as BXSelect).type).toBe(
-        'select-one'
-      );
+      expect(
+        (document.body.querySelector(`${prefix}-select`) as BXSelect).type
+      ).toBe('select-one');
     });
 
     it('should unsupport multiple selection', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const elem = document.body.querySelector('bx-select');
+      const elem = document.body.querySelector(`${prefix}-select`);
       const { _attributeToProperty: origAttributeToProperty } = elem as any;
       let caught;
       await new Promise<void>((resolve) => {
@@ -258,14 +269,17 @@ describe('bx-select', function () {
       render(template({ value: 'staging' }), document.body);
       await Promise.resolve();
       expect(
-        (document.body.querySelector('bx-select') as BXSelect).selectedIndex
+        (document.body.querySelector(`${prefix}-select`) as BXSelect)
+          .selectedIndex
       ).toBe(2);
     });
 
     it('should support setting the selected index', async function () {
       render(template(), document.body);
       await Promise.resolve();
-      const select = document.body.querySelector('bx-select') as BXSelect;
+      const select = document.body.querySelector(
+        `${prefix}-select`
+      ) as BXSelect;
       select.selectedIndex = 2;
       expect(select.value).toBe('staging');
     });
@@ -330,7 +344,7 @@ describe('bx-select', function () {
     beforeEach(async function () {
       render(template(), document.body);
       await Promise.resolve();
-      elem = document.body.querySelector('bx-select')!;
+      elem = document.body.querySelector(`${prefix}-select`)!;
     });
 
     it('should support checking if required value exists', async function () {

@@ -16,6 +16,7 @@ import { RADIO_BUTTON_ORIENTATION } from './radio-button-group';
 import { RADIO_BUTTON_LABEL_POSITION } from './radio-button';
 import './radio-button-skeleton';
 import storyDocs from './radio-button-story.mdx';
+import { prefix } from '../../globals/settings';
 
 const orientations = {
   [`Horizontal (${RADIO_BUTTON_ORIENTATION.HORIZONTAL})`]:
@@ -33,29 +34,29 @@ const labelPositions = {
 
 export const Default = (args) => {
   const { disabled, labelPosition, orientation, name, value, onChange } =
-    args?.['bx-radio-button-group'] ?? {};
-  const { hideLabel, labelText } = args?.['bx-radio-button'] ?? {};
+    args?.[`${prefix}-radio-button-group`] ?? {};
+  const { hideLabel, labelText } = args?.[`${prefix}-radio-button`] ?? {};
   return html`
-    <bx-radio-button-group
+    <cds-radio-button-group
       ?disabled="${disabled}"
       label-position="${ifDefined(labelPosition)}"
       orientation="${ifDefined(orientation)}"
       name="${ifDefined(name)}"
       value="${ifDefined(value)}"
-      @bx-radio-button-group-changed="${onChange}">
-      <bx-radio-button
+      @cds-radio-button-group-changed="${onChange}">
+      <cds-radio-button
         ?hide-label="${hideLabel}"
         label-text="${ifDefined(labelText)}"
-        value="all"></bx-radio-button>
-      <bx-radio-button
+        value="all"></cds-radio-button>
+      <cds-radio-button
         ?hide-label="${hideLabel}"
         label-text="${ifDefined(labelText)}"
-        value="cloudFoundry"></bx-radio-button>
-      <bx-radio-button
+        value="cloudFoundry"></cds-radio-button>
+      <cds-radio-button
         ?hide-label="${hideLabel}"
         label-text="${ifDefined(labelText)}"
-        value="staging"></bx-radio-button>
-    </bx-radio-button-group>
+        value="staging"></cds-radio-button>
+    </cds-radio-button-group>
   `;
 };
 
@@ -63,7 +64,7 @@ Default.storyName = 'Default';
 
 Default.parameters = {
   knobs: {
-    'bx-radio-button-group': () => ({
+    [`${prefix}-radio-button-group`]: () => ({
       disabled: boolean('Disabled (disabled)', false),
       labelPosition: select(
         'Label position (label-position)',
@@ -77,9 +78,9 @@ Default.parameters = {
       ),
       name: textNullable('Name (name)', 'radio-group'),
       value: textNullable('Value (value)', ''),
-      onChange: action('bx-radio-button-group-changed'),
+      onChange: action(`${prefix}-radio-button-group-changed`),
     }),
-    'bx-radio-button': () => ({
+    [`${prefix}-radio-button`]: () => ({
       hideLabel: boolean('Hide label (hide-label)', false),
       labelText: textNullable('Label text (label-text)', 'Radio button'),
     }),
@@ -87,7 +88,7 @@ Default.parameters = {
 };
 
 export const skeleton = () =>
-  html` <bx-radio-button-skeleton></bx-radio-button-skeleton> `;
+  html` <cds-radio-button-skeleton></cds-radio-button-skeleton> `;
 
 skeleton.parameters = {
   percy: {

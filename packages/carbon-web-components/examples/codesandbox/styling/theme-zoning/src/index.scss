@@ -5,6 +5,7 @@
 // LICENSE file in the root directory of this source tree.
 //
 
+@use '@carbon/styles/scss/config' as *;
 @use '@carbon/styles/scss/vendor/@carbon/elements/scss/themes/mixins';
 
 html {
@@ -34,19 +35,19 @@ footer {
     }
   }
 
-  bx-btn + bx-btn {
+  #{$prefix}-btn + #{$prefix}-btn {
     margin-left: 1rem;
   }
 }
 
-bx-btn,
-bx-header,
-bx-header-nav,
-bx-header-nav-item,
-bx-header-menu,
-bx-header-menu-item,
-bx-header-menu-button,
-bx-header-name {
+#{$prefix}-btn,
+#{$prefix}-header,
+#{$prefix}-header-nav,
+#{$prefix}-header-nav-item,
+#{$prefix}-header-menu,
+#{$prefix}-header-menu-item,
+#{$prefix}-header-menu-button,
+#{$prefix}-header-name {
   visibility: hidden;
 
   &:defined {
@@ -54,11 +55,11 @@ bx-header-name {
   }
 }
 
-bx-header {
+#{$prefix}-header {
   position: relative;
 }
 
-.bx--content.bx-ce-demo-theme-zoning--ui-shell-content {
+.#{$prefix}--content.#{$prefix}-ce-demo-theme-zoning--ui-shell-content {
   background-color: var(--cds-ui-01, #f4f4f4);
   margin: 0;
   width: 100%;

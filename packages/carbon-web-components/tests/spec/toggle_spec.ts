@@ -8,6 +8,7 @@
  */
 
 import { html, render } from 'lit';
+import { prefix } from '../../src/globals/settings';
 import { Default } from '../../src/components/toggle/toggle-story';
 
 /**
@@ -25,10 +26,10 @@ const getValues = (formData: FormData) => {
 
 const template = (props?) =>
   Default({
-    'bx-toggle': props,
+    [`${prefix}-toggle`]: props,
   });
 
-describe('bx-toggle', function () {
+describe(`${prefix}-toggle`, function () {
   describe('Rendering', function () {
     it('Should render with minimum attributes', async function () {
       render(
@@ -38,7 +39,9 @@ describe('bx-toggle', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-toggle' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-toggle` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });
@@ -59,7 +62,9 @@ describe('bx-toggle', function () {
         document.body
       );
       await Promise.resolve();
-      expect(document.body.querySelector('bx-toggle' as any)).toMatchSnapshot({
+      expect(
+        document.body.querySelector(`${prefix}-toggle` as any)
+      ).toMatchSnapshot({
         mode: 'shadow',
       });
     });

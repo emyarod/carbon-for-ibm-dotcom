@@ -12,6 +12,7 @@ import { select } from '@storybook/addon-knobs';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { SKELETON_TEXT_TYPE } from './skeleton-text';
 import storyDocs from './skeleton-text-story.mdx';
+import { prefix } from '../../globals/settings';
 
 const types = {
   Regular: null,
@@ -19,9 +20,9 @@ const types = {
 };
 
 export const Default = (args) => {
-  const { type } = args?.['bx-skeleton-text'] ?? {};
+  const { type } = args?.[`${prefix}-skeleton-text`] ?? {};
   return html`
-    <bx-skeleton-text type="${ifDefined(type)}"></bx-skeleton-text>
+    <cds-skeleton-text type="${ifDefined(type)}"></cds-skeleton-text>
   `;
 };
 
@@ -29,16 +30,16 @@ Default.storyName = 'Default';
 
 Default.parameters = {
   knobs: {
-    'bx-skeleton-text': () => ({
+    [`${prefix}-skeleton-text'`]: () => ({
       type: select('Skeleton text type (type)', types, null),
     }),
   },
 };
 
 export const lines = () => html`
-  <bx-skeleton-text type="line"></bx-skeleton-text>
-  <bx-skeleton-text type="line"></bx-skeleton-text>
-  <bx-skeleton-text type="line"></bx-skeleton-text>
+  <cds-skeleton-text type="line"></cds-skeleton-text>
+  <cds-skeleton-text type="line"></cds-skeleton-text>
+  <cds-skeleton-text type="line"></cds-skeleton-text>
 `;
 
 lines.decorators = [

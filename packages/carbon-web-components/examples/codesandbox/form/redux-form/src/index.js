@@ -11,7 +11,12 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
-import { Field, SubmissionError, reduxForm, reducer as reduxFormReducer } from 'redux-form';
+import {
+  Field,
+  SubmissionError,
+  reduxForm,
+  reducer as reduxFormReducer,
+} from 'redux-form';
 import BXBtn from '@carbon/web-components/es/components-react/button/button.js';
 import BXFormItem from '@carbon/web-components/es/components-react/form/form-item.js';
 import BXInput from '@carbon/web-components/es/components-react/input/input.js';
@@ -41,7 +46,8 @@ const submit = async (values) => {
     });
   } else if (values.password !== 'redux-form') {
     throw new SubmissionError({
-      password: 'Wrong password (Has to be the package name this demo depends on)',
+      password:
+        'Wrong password (Has to be the package name this demo depends on)',
       _error: 'Login failed!',
     });
   } else {
@@ -70,11 +76,21 @@ const SubmitValidationForm = reduxForm({
 })(({ error, handleSubmit, pristine, reset, submitting }) => (
   <form>
     {error && (
-      <BXInlineNotification kind="error" title="Login failed" subtitle="Please correct below errors." hideCloseButton={true} />
+      <BXInlineNotification
+        kind="error"
+        title="Login failed"
+        subtitle="Please correct below errors."
+        hideCloseButton={true}
+      />
     )}
     <Field name="username" type="text" component={FieldImpl} label="Username" />
-    <Field name="password" type="password" component={FieldImpl} label="Password" />
-    <div className="bx-ce-demo-redux-form--btn-container">
+    <Field
+      name="password"
+      type="password"
+      component={FieldImpl}
+      label="Password"
+    />
+    <div className="cds-ce-demo-redux-form--btn-container">
       {/*
           NOTE: `onsubmit` event (with `type="submit"`) does not work across shadow DOM boundary
           (does not have `composed` flag, etc.) and thus we handle `onclick` directly here
