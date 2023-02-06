@@ -27,6 +27,7 @@ const container = ({
   <style>
     ${containerStyles}
   </style>
+  <cds-skip-to-content href="#main-content"></cds-skip-to-content>
   <div
     id="main-content"
     name="main-content"
