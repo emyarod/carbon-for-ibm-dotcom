@@ -10,6 +10,7 @@
 import { html } from 'lit';
 import { action } from '@storybook/addon-actions';
 import { boolean, select } from '@storybook/addon-knobs';
+import { prefix } from '../../globals/settings';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import {
@@ -20,7 +21,6 @@ import {
 import './dropdown-item';
 import './dropdown-skeleton';
 import storyDocs from './dropdown-story.mdx';
-import { prefix } from '../../globals/settings';
 
 const colorSchemes = {
   [`Regular`]: null,
@@ -118,11 +118,11 @@ Default.parameters = {
         'Select an item'
       ),
       disableSelection: boolean(
-        'Disable user-initiated selection change (Call event.preventDefault() in cds-dropdown-beingselected event)',
+        `Disable user-initiated selection change (Call event.preventDefault() in ${prefix}-dropdown-beingselected event)`,
         false
       ),
       disableToggle: boolean(
-        'Disable user-initiated toggle of open state (Call event.preventDefault() in cds-dropdown-beingtoggled event)',
+        `Disable user-initiated toggle of open state (Call event.preventDefault() in ${prefix}-dropdown-beingtoggled event)`,
         false
       ),
       onBeforeSelect: action(`${prefix}-dropdown-beingselected`),
