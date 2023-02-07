@@ -8,9 +8,9 @@
 import { html } from 'lit';
 import { action } from '@storybook/addon-actions';
 import { boolean, select } from '@storybook/addon-knobs';
+import { prefix } from '../../globals/settings';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { prefix } from '../../globals/settings';
 import { INPUT_SIZE } from '../input/input';
 import './date-picker';
 import {
