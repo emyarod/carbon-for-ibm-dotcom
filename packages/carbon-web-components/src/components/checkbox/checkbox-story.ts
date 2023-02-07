@@ -28,15 +28,27 @@ export const Default = (args) => {
     onChange,
   } = args?.[`${prefix}-checkbox`] ?? {};
   return html`
-    <cds-checkbox
-      ?checked="${checked}"
-      ?disabled="${disabled}"
-      ?hide-label="${hideLabel}"
-      ?indeterminate="${indeterminate}"
-      label-text="${ifDefined(labelText)}"
-      name="${ifDefined(name)}"
-      value="${ifDefined(value)}"
-      @cds-checkbox-changed="${onChange}"></cds-checkbox>
+    <fieldset class="${prefix}--fieldset">
+      <legend class="${prefix}--label">Group label</legend>
+      <cds-checkbox
+        ?checked="${checked}"
+        ?disabled="${disabled}"
+        ?hide-label="${hideLabel}"
+        ?indeterminate="${indeterminate}"
+        label-text="${ifDefined(labelText)}"
+        name="${ifDefined(name)}"
+        value="${ifDefined(value)}"
+        @bx-checkbox-changed="${onChange}"></cds-checkbox>
+      <cds-checkbox
+        ?checked="${checked}"
+        ?disabled="${disabled}"
+        ?hide-label="${hideLabel}"
+        ?indeterminate="${indeterminate}"
+        label-text="${ifDefined(labelText)}"
+        name="${ifDefined(name)}"
+        value="${ifDefined(value)}"
+        @bx-checkbox-changed="${onChange}"></cds-checkbox>
+    </fieldset>
   `;
 };
 
