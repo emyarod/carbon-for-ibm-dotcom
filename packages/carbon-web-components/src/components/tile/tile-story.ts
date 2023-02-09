@@ -34,30 +34,11 @@ export const Default = (args) => {
 
 Default.storyName = 'Default';
 
-Default.parameters = {
-  knobs: {
-    [`${prefix}-tile`]: () => ({
-      colorScheme: select('Color scheme (color-scheme)', colorSchemes, null),
-    }),
-  },
-};
-
 export const clickable = (args) => {
-  const {
-    colorScheme,
-    disabled,
-    download,
-    href,
-    hreflang,
-    ping,
-    rel,
-    target,
-    type,
-  } = args?.[`${prefix}-clickable-tile`] ?? {};
+  const { download, href, hreflang, ping, rel, target, type } =
+    args?.['cds-clickable-tile'] ?? {};
   return html`
     <cds-clickable-tile
-      color-scheme="${ifDefined(colorScheme)}"
-      ?disabled="${disabled}"
       download="${ifDefined(download)}"
       href="${ifDefined(href)}"
       hreflang="${ifDefined(hreflang)}"
@@ -72,15 +53,13 @@ export const clickable = (args) => {
 
 clickable.parameters = {
   knobs: {
-    [`${prefix}-clickable-tile`]: () => ({
-      colorScheme: select('Color scheme (color-scheme)', colorSchemes, null),
-      disabled: boolean('Disabled (disabled)', false),
+    'cds-clickable-tile': () => ({
       href: textNullable('Href for clickable UI (href)', ''),
     }),
   },
 };
 
-export const singleSelectable = (args) => {
+export const Radio = (args) => {
   const { checkmarkLabel, colorScheme, name, value, onInput } =
     args?.[`${prefix}-radio-tile`] ?? {};
   return html`
@@ -114,9 +93,9 @@ export const singleSelectable = (args) => {
   `;
 };
 
-singleSelectable.storyName = 'Single-selectable';
+Radio.storyName = 'Single-selectable';
 
-singleSelectable.parameters = {
+Radio.parameters = {
   knobs: {
     [`${prefix}-radio-tile`]: () => ({
       checkmarkLabel: textNullable(
@@ -133,17 +112,37 @@ singleSelectable.parameters = {
 
 export const multiSelectable = (args) => {
   const { checkmarkLabel, colorScheme, name, selected, value, onInput } =
-    args?.[`${prefix}-selectable-tile`] ?? {};
+    args?.['cds-selectable-tile'] ?? {};
   return html`
-    <cds-selectable-tile
-      checkmark-label="${ifDefined(checkmarkLabel)}"
-      color-scheme="${ifDefined(colorScheme)}"
-      name="${ifDefined(name)}"
-      ?selected="${selected}"
-      value="${ifDefined(value)}"
-      @input="${onInput}">
-      Multi-select Tile
-    </cds-selectable-tile>
+    <fieldset>
+      <cds-selectable-tile
+        checkmark-label="${ifDefined(checkmarkLabel)}"
+        color-scheme="${ifDefined(colorScheme)}"
+        name="${ifDefined(name)}"
+        ?selected="${selected}"
+        value="${ifDefined(value)}"
+        @input="${onInput}">
+        Option 1
+      </cds-selectable-tile>
+      <cds-selectable-tile
+        checkmark-label="${ifDefined(checkmarkLabel)}"
+        color-scheme="${ifDefined(colorScheme)}"
+        name="${ifDefined(name)}"
+        ?selected="${selected}"
+        value="${ifDefined(value)}"
+        @input="${onInput}">
+        Option 2
+      </cds-selectable-tile>
+      <cds-selectable-tile
+        checkmark-label="${ifDefined(checkmarkLabel)}"
+        color-scheme="${ifDefined(colorScheme)}"
+        name="${ifDefined(name)}"
+        ?selected="${selected}"
+        value="${ifDefined(value)}"
+        @input="${onInput}">
+        Option 3
+      </cds-selectable-tile>
+    </fieldset>
   `;
 };
 
@@ -151,8 +150,8 @@ multiSelectable.storyName = 'Multi-selectable';
 
 multiSelectable.parameters = {
   knobs: {
-    [`${prefix}-selectable-tile`]: () => ({
-      ...singleSelectable.parameters.knobs[`${prefix}-radio-tile`](),
+    'cds-selectable-tile': () => ({
+      ...Radio.parameters.knobs['cds-radio-tile'](),
       selected: boolean('Selected (selected)', false),
     }),
   },
