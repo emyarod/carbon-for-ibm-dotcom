@@ -16,16 +16,16 @@ import storyDocs from './list-story.mdx';
 import { prefix } from '../../globals/settings';
 
 export const ordered = (args) => {
-  const { isExpressive } = args?.[`${prefix}-list`] ?? {};
+  const { isExpressive, native } = args?.[`${prefix}-list`] ?? {};
   return html`
-    <cds-ordered-list ?isExpressive="${isExpressive}">
+    <cds-ordered-list ?isExpressive="${isExpressive}" ?native="${native}">
       <cds-list-item>
         Ordered List level 1
-        <cds-ordered-list ?isExpressive="${isExpressive}">
+        <cds-ordered-list ?isExpressive="${isExpressive}" ?native="${native}">
           <cds-list-item>Ordered List level 2</cds-list-item>
           <cds-list-item>
             Ordered List level 2
-            <cds-ordered-list ?isExpressive="${isExpressive}">
+            <cds-ordered-list ?isExpressive="${isExpressive}" ?native="${native}">
               <cds-list-item>Ordered List level 2</cds-list-item>
               <cds-list-item>Ordered List level 2</cds-list-item>
             </cds-ordered-list>
@@ -34,7 +34,18 @@ export const ordered = (args) => {
       </cds-list-item>
       <cds-list-item>Ordered List level 1</cds-list-item>
       <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
+      <cds-list-item>Ordered List level 1</cds-list-item>
     </cds-ordered-list>
+  </cds-ordered-list>
   `;
 };
 
@@ -68,6 +79,7 @@ export default {
     knobs: {
       [`${prefix}-list`]: () => ({
         isExpressive: boolean('Expressive (isExpressive)', false),
+        native: boolean('Native (native)', false),
       }),
     },
   },
