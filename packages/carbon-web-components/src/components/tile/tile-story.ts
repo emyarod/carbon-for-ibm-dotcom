@@ -13,10 +13,7 @@ import { boolean, select } from '@storybook/addon-knobs';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { TILE_COLOR_SCHEME } from './tile';
-import './clickable-tile';
-import './radio-tile';
-import './selectable-tile';
-import './expandable-tile';
+import './index';
 import storyDocs from './tile-story.mdx';
 import { prefix } from '../../globals/settings';
 
@@ -28,7 +25,10 @@ const colorSchemes = {
 export const Default = (args) => {
   const { colorScheme } = args?.[`${prefix}-tile`] ?? {};
   return html`
-    <cds-tile color-scheme="${ifDefined(colorScheme)}">Default tile</cds-tile>
+    <cds-tile color-scheme="${ifDefined(colorScheme)}">
+      Default tile
+      <a href="https://example.com">Link</a>
+    </cds-tile>
   `;
 };
 
@@ -63,15 +63,15 @@ export const Radio = (args) => {
   const { checkmarkLabel, colorScheme, name, value, onInput } =
     args?.[`${prefix}-radio-tile`] ?? {};
   return html`
-    <fieldset>
-      <legend>Single-select tiles</legend>
+    <cds-tile-group>
+      <legend slot="legend">Single-select tiles</legend>
       <cds-radio-tile
         checkmark-label="${ifDefined(checkmarkLabel)}"
         color-scheme="${ifDefined(colorScheme)}"
         name="${ifDefined(name)}"
         value="${ifDefined(value)}"
         @input="${onInput}">
-        Single-select Tile
+        Option 1
       </cds-radio-tile>
       <cds-radio-tile
         checkmark-label="${ifDefined(checkmarkLabel)}"
@@ -79,7 +79,7 @@ export const Radio = (args) => {
         name="${ifDefined(name)}"
         value="${ifDefined(value)}"
         @input="${onInput}">
-        Single-select Tile
+        Option 2
       </cds-radio-tile>
       <cds-radio-tile
         checkmark-label="${ifDefined(checkmarkLabel)}"
@@ -87,13 +87,13 @@ export const Radio = (args) => {
         name="${ifDefined(name)}"
         value="${ifDefined(value)}"
         @input="${onInput}">
-        Single-select Tile
+        Option 3
       </cds-radio-tile>
-    </fieldset>
+    </cds-tile-group>
   `;
 };
 
-Radio.storyName = 'Single-selectable';
+Radio.storyName = 'Radio';
 
 Radio.parameters = {
   knobs: {
@@ -146,7 +146,7 @@ export const multiSelectable = (args) => {
   `;
 };
 
-multiSelectable.storyName = 'Multi-selectable';
+multiSelectable.storyName = 'Multi Select';
 
 multiSelectable.parameters = {
   knobs: {
@@ -198,6 +198,12 @@ expandable.parameters = {
     }),
   },
 };
+
+export const Selectable = () => {
+  return html` <cds-selectable-tile> Default tile </cds-selectable-tile> `;
+};
+
+Selectable.storyName = 'Selectable';
 
 export default {
   title: 'Components/Tile',

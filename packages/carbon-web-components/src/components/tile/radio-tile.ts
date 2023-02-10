@@ -7,6 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { html, svg } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { customElement } from 'lit/decorators.js';
 import { prefix } from '../../globals/settings';
 import HostListener from '../../globals/decorators/host-listener';
@@ -15,6 +17,8 @@ import RadioGroupManager, {
   NAVIGATION_DIRECTION,
 } from '../../globals/internal/radio-group-manager';
 import SelectableTile from './selectable-tile';
+import CheckmarkFilled16 from '@carbon/icons/lib/checkmark--filled/16';
+import { classMap } from 'lit-html/directives/class-map';
 
 /**
  * Map of navigation direction by key.
@@ -119,6 +123,45 @@ class BXRadioTile extends HostListenerMixin(SelectableTile) {
     if (changedProperties.has('name')) {
       this._attachManager();
     }
+  }
+
+  render() {
+    const {
+      colorScheme,
+      checkmarkLabel,
+      name,
+      selected,
+      value,
+      _inputType: inputType,
+      _handleChange: handleChange,
+    } = this;
+    const classes = classMap({
+      [`${prefix}--tile`]: true,
+      [`${prefix}--tile--selectable`]: true,
+      [`${prefix}--tile--is-selected`]: selected,
+      [`${prefix}--tile--${colorScheme}`]: colorScheme,
+    });
+    return html`
+      <input
+        type="${inputType}"
+        id="input"
+        class="${prefix}--tile-input"
+        tabindex="-1"
+        name="${ifDefined(name)}"
+        value="${ifDefined(value)}"
+        .checked=${selected}
+        @change=${handleChange} />
+      <label for="input" class="${classes}" tabindex="0">
+        <div class="${prefix}--tile__checkmark">
+          ${CheckmarkFilled16({
+            children: !checkmarkLabel
+              ? undefined
+              : svg`<title>${checkmarkLabel}</title>`,
+          })}
+        </div>
+        <div class="${prefix}--tile-content"><slot></slot></div>
+      </label>
+    `;
   }
 }
 
