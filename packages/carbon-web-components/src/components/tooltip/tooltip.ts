@@ -17,6 +17,7 @@ import { find } from '../../globals/internal/collection-helpers';
 import BXFloatingMenu from '../floating-menu/floating-menu';
 import BXFloatingMenuTrigger from '../floating-menu/floating-menu-trigger';
 import styles from './tooltip.scss';
+import { classMap } from 'lit-html/directives/class-map';
 
 /**
  * Trigger button of tooltip.
@@ -39,27 +40,49 @@ class BXTooltip
   @query('#trigger')
   private _triggerNode!: HTMLElement;
 
+  @property({ reflect: true, type: String })
+  align = 'bottom';
+
+  @property({ reflect: true, type: String })
+  duration;
+
+  @property({ attribute: 'enter-delay-ms', type: Number })
+  enterDelayMs = 100;
+
+  @property({ attribute: 'exit-delay-ms', type: Number })
+  exitDelayMs = 300;
+
   /**
    * Handles `click` event on this element.
    *
    * @param {undefined|boolean} forceState if set, will be cast to boolean and force tooltip to open or close.
    */
-  @HostListener('click')
+  @HostListener('mouseover')
   // @ts-ignore: The decorator refers to this method but TS thinks this method is not referred to
-  private _handleClick = async (
-    forceState: undefined | boolean = undefined
-  ) => {
-    if (forceState === undefined) {
+  private _handleOver = async () => {
+    setTimeout(async () => {
       this.open = !this.open;
-    } else {
-      this.open = Boolean(forceState);
-    }
-    const { open, updateComplete } = this;
-    if (open) {
-      await updateComplete;
-      const { _menuBody: menuBody } = this;
-      menuBody?.focus();
-    }
+      const { open, updateComplete } = this;
+      if (open) {
+        await updateComplete;
+        const { _menuBody: menuBody } = this;
+        menuBody?.focus();
+      }
+    }, this.enterDelayMs);
+  };
+
+  /**
+   * Handles `keydown` event on this element.
+   */
+  @HostListener('mouseout')
+  // @ts-ignore: The decorator refers to this method but TS thinks this method is not referred to
+  private _handleHoverOut = async () => {
+    setTimeout(async () => {
+      const { open } = this;
+      if (open) {
+        this.open = !this.open;
+      }
+    }, this.exitDelayMs);
   };
 
   /**
@@ -69,10 +92,8 @@ class BXTooltip
   @HostListener('keydown')
   // @ts-ignore: The decorator refers to this method but TS thinks this method is not referred to
   private _handleKeydown = async (event) => {
-    if ([' ', 'Enter'].includes(event.key)) {
-      this._handleClick();
-    } else if (event.key === 'Escape') {
-      this._handleClick(false);
+    if (event.key === ' ' || event.key === 'Enter') {
+      this._handleOver();
     }
   };
 
@@ -138,9 +159,26 @@ class BXTooltip
   }
 
   render() {
+    const buttonClasses = classMap({
+      [`${prefix}--popover-container`]: true,
+      [`${prefix}--popover--caret`]: true,
+      [`${prefix}--popover--high-contrast`]: true,
+      [`${prefix}--tooltip`]: true,
+      [`${prefix}--popover--open`]: this.open,
+      [`${prefix}--popover--${this.align}`]: true,
+    });
     return html`
-      ${Information16({ id: 'trigger' })}
-      <slot></slot>
+      <span class="${buttonClasses}">
+        <button class="sb-tooltip-trigger">
+          ${Information16({ id: 'trigger' })}
+        </button>
+        <span class="${prefix}--popover">
+          <span class="${prefix}--popover-content ${prefix}--tooltip-content">
+            <slot></slot>
+          </span>
+          <span class="${prefix}--popover-caret"> </span>
+        </span>
+      </span>
     `;
   }
 
