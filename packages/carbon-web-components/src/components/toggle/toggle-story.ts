@@ -12,9 +12,9 @@ import { action } from '@storybook/addon-actions';
 import { boolean, select } from '@storybook/addon-knobs';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { prefix } from '../../globals/settings';
 import { TOGGLE_SIZE } from './toggle';
 import storyDocs from './toggle-story.mdx';
-import { prefix } from '../../globals/settings';
 
 const sizes = {
   'Regular size': null,

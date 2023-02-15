@@ -18,9 +18,9 @@ import './tooltip';
 import './tooltip-body';
 import './tooltip-footer';
 import { TOOLTIP_ALIGNMENT } from './defs';
+import { prefix } from '../../globals/settings';
 import styles from './tooltip-story.scss';
 import storyDocs from './tooltip-story.mdx';
-import { prefix } from '../../globals/settings';
 
 const tooltipAlignments = {
   [`top`]: TOOLTIP_ALIGNMENT.TOP,
@@ -40,7 +40,7 @@ const tooltipAlignments = {
 export const Default = (args) => {
   const { open } = args?.[`${prefix}-tooltip`] ?? {};
   const { alignment, direction, enterDelay, exitDelay } =
-    args?.[`${prefix}-tooltip-body`] ?? {};
+    args?.[`${prefix}-tooltip`] ?? {};
   return html`
     <style>
       ${styles}
@@ -63,8 +63,6 @@ Default.parameters = {
   knobs: {
     [`${prefix}-tooltip`]: () => ({
       open: boolean('Open (open)', false),
-    }),
-    [`${prefix}-tooltip-body`]: () => ({
       alignment: select(
         'Tooltip alignment to trigger button (alignment)',
         tooltipAlignments,

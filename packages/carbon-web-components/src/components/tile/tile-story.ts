@@ -13,9 +13,9 @@ import { boolean, select } from '@storybook/addon-knobs';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { TILE_COLOR_SCHEME } from './tile';
+import { prefix } from '../../globals/settings';
 import './index';
 import storyDocs from './tile-story.mdx';
-import { prefix } from '../../globals/settings';
 
 const colorSchemes = {
   [`Regular`]: null,
@@ -36,7 +36,7 @@ Default.storyName = 'Default';
 
 export const clickable = (args) => {
   const { download, href, hreflang, ping, rel, target, type } =
-    args?.['cds-clickable-tile'] ?? {};
+    args?.[`${prefix}-clickable-tile`] ?? {};
   return html`
     <cds-clickable-tile
       download="${ifDefined(download)}"
@@ -53,7 +53,7 @@ export const clickable = (args) => {
 
 clickable.parameters = {
   knobs: {
-    'cds-clickable-tile': () => ({
+    [`${prefix}-clickable-tile`]: () => ({
       href: textNullable('Href for clickable UI (href)', ''),
     }),
   },
@@ -112,7 +112,7 @@ Radio.parameters = {
 
 export const multiSelectable = (args) => {
   const { checkmarkLabel, colorScheme, name, selected, value, onInput } =
-    args?.['cds-selectable-tile'] ?? {};
+    args?.[`${prefix}-selectable-tile`] ?? {};
   return html`
     <fieldset>
       <cds-selectable-tile
@@ -150,8 +150,8 @@ multiSelectable.storyName = 'Multi Select';
 
 multiSelectable.parameters = {
   knobs: {
-    'cds-selectable-tile': () => ({
-      ...Radio.parameters.knobs['cds-radio-tile'](),
+    [`${prefix}-selectable-tile`]: () => ({
+      ...Radio.parameters.knobs[`{${prefix}-radio-tile`](),
       selected: boolean('Selected (selected)', false),
     }),
   },

@@ -22,7 +22,6 @@ import styles from './tile.scss';
  * Multi-selectable tile.
  *
  * @element cds-selectable-tile
- * @fires cds-selectable-tile-changed - The custom event fired after this selectable tile changes its selected state.
  */
 @customElement(`${prefix}-selectable-tile`)
 class BXSelectableTile extends FocusMixin(LitElement) {
