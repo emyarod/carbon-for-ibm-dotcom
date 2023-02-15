@@ -19,39 +19,33 @@ import storyDocs from './progress-indicator-story.mdx';
 import { prefix } from '../../globals/settings';
 
 export const Default = (args) => {
-  const { vertical } = args?.[`cds-progress-indicator`] ?? {};
-  const { iconLabel, labelText, secondaryLabelText } =
-    args?.[`${prefix}-progress-step`] ?? {};
+  const { vertical } = args?.['bx-progress-indicator'] ?? {};
+  const { iconLabel, secondaryLabelText } = args?.['bx-progress-step'] ?? {};
   return html`
     <cds-progress-indicator ?vertical="${vertical}">
       <cds-progress-step
         icon-label="${ifDefined(iconLabel)}"
-        label-text="${ifDefined(labelText)}"
-        secondary-label-text="${ifDefined(secondaryLabelText)}"
-        state="invalid"></cds-progress-step>
-      <cds-progress-step
-        icon-label="${ifDefined(iconLabel)}"
-        label-text="${ifDefined(labelText)}"
+        label-text="First step"
         secondary-label-text="${ifDefined(secondaryLabelText)}"
         state="complete"></cds-progress-step>
       <cds-progress-step
         icon-label="${ifDefined(iconLabel)}"
-        label-text="${ifDefined(labelText)}"
-        secondary-label-text="${ifDefined(secondaryLabelText)}"
+        label-text="Second step with tooltip"
         state="current"></cds-progress-step>
+      <cds-progress-step
+        icon-label="${ifDefined(iconLabel)}"
+        label-text="Third step with tooltip"
+        state="incomplete"></cds-progress-step>
+      <cds-progress-step
+        icon-label="${ifDefined(iconLabel)}"
+        label-text="Fourth step"
+        secondary-label-text="Example invalid step"
+        state="invalid"></cds-progress-step>
       <cds-progress-step
         disabled
         icon-label="${ifDefined(iconLabel)}"
-        label-text="${ifDefined(labelText)}"
-        secondary-label-text="${ifDefined(
-          secondaryLabelText
-        )}"></cds-progress-step>
-      <cds-progress-step
-        icon-label="${ifDefined(iconLabel)}"
-        label-text="${ifDefined(labelText)}"
-        secondary-label-text="${ifDefined(
-          secondaryLabelText
-        )}"></cds-progress-step>
+        label-text="Fifth step"
+        state="incomplete"></cds-progress-step>
     </cds-progress-indicator>
   `;
 };
@@ -65,7 +59,6 @@ Default.parameters = {
     }),
     [`${prefix}-progress-step`]: () => ({
       iconLabel: textNullable('Icon label (icon-label)', ''),
-      labelText: textNullable('Primary label text (label-text)', 'Label'),
       secondaryLabelText: textNullable(
         'Secondary label text (secondary-label-text)',
         'Secondary label'
