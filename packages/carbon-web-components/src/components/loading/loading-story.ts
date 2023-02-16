@@ -17,13 +17,15 @@ import { prefix } from '../../globals/settings';
 const types = {
   [`Regular (${LOADING_TYPE.REGULAR})`]: null,
   [`Small (${LOADING_TYPE.SMALL})`]: LOADING_TYPE.SMALL,
-  [`With overlay (${LOADING_TYPE.OVERLAY})`]: LOADING_TYPE.OVERLAY,
 };
 
 export const Default = (args) => {
-  const { inactive, type } = args?.[`${prefix}-loading`] ?? {};
+  const { inactive, type, withOverlay } = args?.[`${prefix}-loading`] ?? {};
   return html`
-    <cds-loading ?inactive=${inactive} type=${ifDefined(type)}></cds-loading>
+    <cds-loading
+      ?inactive=${inactive}
+      type=${ifDefined(type)}
+      overlay=${withOverlay}></cds-loading>
   `;
 };
 
@@ -37,6 +39,7 @@ export default {
       [`${prefix}-loading`]: () => ({
         inactive: boolean('Inactive (inactive)', false),
         type: select('The spinner type (type)', types, null),
+        withOverlay: boolean('With overlay (withOverlay)', false),
       }),
     },
   },
