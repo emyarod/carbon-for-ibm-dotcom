@@ -32,7 +32,7 @@ const sizes = {
 };
 
 export const Default = (args) => {
-  const { open, size, disableClose, onBeforeClose, onClose } =
+  const { danger, open, size, disableClose, onBeforeClose, onClose } =
     args?.[`${prefix}-modal`] ?? {};
   const handleBeforeClose = (event: CustomEvent) => {
     onBeforeClose(event);
@@ -56,7 +56,9 @@ export const Default = (args) => {
         <cds-modal-footer-button kind="secondary" data-modal-close
           >Cancel</cds-modal-footer-button
         >
-        <cds-modal-footer-button kind="primary">Save</cds-modal-footer-button>
+        <cds-modal-footer-button kind="${danger ? 'danger' : 'primary'}"
+          >Save</cds-modal-footer-button
+        >
       </cds-modal-footer>
     </cds-modal>
   `;
@@ -65,7 +67,7 @@ export const Default = (args) => {
 Default.storyName = 'Default';
 
 export const SingleButton = (args) => {
-  const { open, size, disableClose, onBeforeClose, onClose } =
+  const { danger, open, size, disableClose, onBeforeClose, onClose } =
     args?.[`${prefix}-modal`] ?? {};
   const handleBeforeClose = (event: CustomEvent) => {
     onBeforeClose(event);
@@ -86,7 +88,9 @@ export const SingleButton = (args) => {
       </cds-modal-header>
       <cds-modal-body><p>Modal text description</p></cds-modal-body>
       <cds-modal-footer>
-        <cds-modal-footer-button kind="primary">Save</cds-modal-footer-button>
+        <cds-modal-footer-button kind="${danger ? 'danger' : 'primary'}"
+          >Save</cds-modal-footer-button
+        >
       </cds-modal-footer>
     </cds-modal>
   `;
@@ -95,7 +99,7 @@ export const SingleButton = (args) => {
 SingleButton.storyName = 'Single button';
 
 export const ThreeButtons = (args) => {
-  const { open, size, disableClose, onBeforeClose, onClose } =
+  const { danger, open, size, disableClose, onBeforeClose, onClose } =
     args?.[`${prefix}-modal`] ?? {};
   const handleBeforeClose = (event: CustomEvent) => {
     onBeforeClose(event);
@@ -122,7 +126,9 @@ export const ThreeButtons = (args) => {
         <cds-modal-footer-button kind="secondary" data-modal-close
           >Cancel</cds-modal-footer-button
         >
-        <cds-modal-footer-button kind="primary">Save</cds-modal-footer-button>
+        <cds-modal-footer-button kind="${danger ? 'danger' : 'primary'}"
+          >Save</cds-modal-footer-button
+        >
       </cds-modal-footer>
     </cds-modal>
   `;
