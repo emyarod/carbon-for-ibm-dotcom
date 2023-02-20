@@ -34,7 +34,6 @@ export const Default = (args) => {
     size,
     alignment,
     isFlush,
-    className,
   } = args?.[`${prefix}-accordion`] ?? {};
   const handleBeforeToggle = (event: CustomEvent) => {
     onBeforeToggle(event);
@@ -49,8 +48,7 @@ export const Default = (args) => {
       @cds-accordion-item-toggled="${onToggle}"
       size="${size}"
       alignment="${alignment}"
-      ?isFlush="${isFlush}"
-      className="${className}">
+      ?isFlush="${isFlush}">
       <cds-accordion-item
         ?disabled="${disabled}"
         ?open="${open}"
