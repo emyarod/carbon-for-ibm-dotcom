@@ -27,7 +27,7 @@ class BXTable extends LitElement {
    * The table size.
    */
   @property({ reflect: true })
-  size = TABLE_SIZE.REGULAR;
+  size = TABLE_SIZE.LG;
 
   /**
    * `true` if this table should support sorting.
