@@ -9,6 +9,7 @@
 @use '@carbon/styles/scss/components/link';
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/utilities/button-reset';
 
 /* stylelint-disable selector-type-no-unknown */
 #{$prefix}-tooltip-body {
@@ -27,4 +28,19 @@
 
 .#{$prefix}-ce-demo-devenv--container {
   justify-content: center;
+}
+
+.sb-tooltip-trigger {
+  @include button-reset.reset();
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid $border-subtle;
+}
+
+.sb-tooltip-trigger svg {
+  fill: $background-inverse;
 }

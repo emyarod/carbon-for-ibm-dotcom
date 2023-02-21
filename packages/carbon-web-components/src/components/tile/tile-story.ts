@@ -54,7 +54,7 @@ export const clickable = (args) => {
 clickable.parameters = {
   knobs: {
     [`${prefix}-clickable-tile`]: () => ({
-      href: textNullable('Href for clickable UI (href)', ''),
+      href: textNullable('Href for clickable UI (href)', 'https://example.com'),
     }),
   },
 };
