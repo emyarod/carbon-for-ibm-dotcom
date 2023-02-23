@@ -25,7 +25,7 @@ export const Default = (args) => {
     <cds-loading
       ?inactive=${inactive}
       type=${ifDefined(type)}
-      overlay=${withOverlay}></cds-loading>
+      ?overlay=${withOverlay}></cds-loading>
   `;
 };
 
