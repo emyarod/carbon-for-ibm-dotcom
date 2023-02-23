@@ -12,6 +12,7 @@ import { action } from '@storybook/addon-actions';
 import { boolean, select } from '@storybook/addon-knobs';
 import textNullable from '../../../.storybook/knob-text-nullable';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { prefix } from '../../globals/settings';
 import {
   DROPDOWN_COLOR_SCHEME,
   DROPDOWN_SIZE,
@@ -19,7 +20,6 @@ import {
 } from './multi-select';
 import './multi-select-item';
 import storyDocs from './multi-select-story.mdx';
-import { prefix } from '../../globals/settings';
 
 const colorSchemes = {
   [`Regular`]: null,
@@ -97,6 +97,10 @@ export const Default = (args) => {
       @cds-multi-select-beingtoggled=${handleBeforeToggle}
       @cds-multi-select-selected=${onSelect}
       @cds-multi-select-toggled=${onToggle}>
+      <cds-multi-select-item value="example"
+        >An example option that is really long to show what should be done to
+        handle long text</cds-multi-select-item
+      >
       <cds-multi-select-item value="all">Option 1</cds-multi-select-item>
       <cds-multi-select-item value="cloudFoundry"
         >Option 2</cds-multi-select-item
