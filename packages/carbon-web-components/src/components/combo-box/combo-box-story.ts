@@ -102,6 +102,10 @@ export const Default = (args) => {
   `;
 };
 
+Default.decorators = [
+  (story) => html` <div style="width:300px">${story()}</div> `,
+];
+
 Default.storyName = 'Default';
 
 export default {
