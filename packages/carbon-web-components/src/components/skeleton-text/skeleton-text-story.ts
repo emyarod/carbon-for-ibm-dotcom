@@ -8,11 +8,11 @@
  */
 
 import { html } from 'lit';
-import { select } from '@storybook/addon-knobs';
+import { boolean, number, text, select } from '@storybook/addon-knobs';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { prefix } from '../../globals/settings';
 import { SKELETON_TEXT_TYPE } from './skeleton-text';
 import storyDocs from './skeleton-text-story.mdx';
-import { prefix } from '../../globals/settings';
 
 const types = {
   Regular: null,
@@ -26,25 +26,42 @@ export const Default = (args) => {
   `;
 };
 
-Default.storyName = 'Default';
-
 Default.parameters = {
   knobs: {
-    [`${prefix}-skeleton-text'`]: () => ({
+    [`${prefix}-skeleton-text`]: () => ({
       type: select('Skeleton text type (type)', types, null),
     }),
   },
 };
 
-export const lines = () => html`
-  <cds-skeleton-text type="line"></cds-skeleton-text>
-  <cds-skeleton-text type="line"></cds-skeleton-text>
-  <cds-skeleton-text type="line"></cds-skeleton-text>
-`;
+export const Lines = (args) => {
+  const { paragraph, lineCount, width } =
+    args?.[`${prefix}-skeleton-text`] ?? {};
+  return html`
+    <cds-skeleton-text
+      type="line"
+      ?paragraph="${paragraph}"
+      lineCount="${lineCount}"
+      width="${width}"></cds-skeleton-text>
+  `;
+};
 
-lines.decorators = [
+Lines.decorators = [
   (story) => html` <div style="width:300px">${story()}</div> `,
 ];
+
+Lines.parameters = {
+  knobs: {
+    [`${prefix}-skeleton-text`]: () => ({
+      paragraph: boolean('Use multiple lines of text (paragraph)', true),
+      lineCount: number('The number of lines in a paragraph (lineCount)', 3),
+      width: text(
+        'Width (in px or %) of single line of text or max-width of paragraph lines (width)',
+        '500px'
+      ),
+    }),
+  },
+};
 
 export default {
   title: 'Components/Skeleton text',
