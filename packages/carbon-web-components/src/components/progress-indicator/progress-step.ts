@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement, html, svg, SVGTemplateResult } from 'lit';
+import { LitElement, html, svg } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import CheckmarkOutline16 from '@carbon/icons/lib/checkmark--outline/16';
 import CircleDash16 from '@carbon/icons/lib/circle-dash/16';

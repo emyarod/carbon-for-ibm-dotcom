@@ -38,7 +38,7 @@ export const Default = (args) => {
         label-text="${ifDefined(labelText)}"
         name="${ifDefined(name)}"
         value="${ifDefined(value)}"
-        @bx-checkbox-changed="${onChange}"></cds-checkbox>
+        @cds-checkbox-changed="${onChange}"></cds-checkbox>
       <cds-checkbox
         ?checked="${checked}"
         ?disabled="${disabled}"
@@ -47,7 +47,7 @@ export const Default = (args) => {
         label-text="${ifDefined(labelText)}"
         name="${ifDefined(name)}"
         value="${ifDefined(value)}"
-        @bx-checkbox-changed="${onChange}"></cds-checkbox>
+        @cds-checkbox-changed="${onChange}"></cds-checkbox>
     </fieldset>
   `;
 };

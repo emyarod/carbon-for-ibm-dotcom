@@ -19,8 +19,9 @@ import storyDocs from './progress-indicator-story.mdx';
 import { prefix } from '../../globals/settings';
 
 export const Default = (args) => {
-  const { vertical } = args?.['bx-progress-indicator'] ?? {};
-  const { iconLabel, secondaryLabelText } = args?.['bx-progress-step'] ?? {};
+  const { vertical } = args?.[`${prefix}-progress-indicator`] ?? {};
+  const { iconLabel, secondaryLabelText } =
+    args?.[`${prefix}-progress-step`] ?? {};
   return html`
     <cds-progress-indicator ?vertical="${vertical}">
       <cds-progress-step
